@@ -3,7 +3,7 @@ const Theme = {
     white: 'rgb(255, 255, 255)',
     primary: 'linear-gradient(180deg, #CD8B65 0%, #BB6B3D 100%)',
     secondary: 'linear-gradient(115.41deg, #CD8A64 -1.77%, #C4794F 73.03%)',
-    terciary: 'rgb(243,226,217,1)',
+    terciary: '#F3E2D9',
     lightGrey: 'rgb( 0,0,0,0.3)',
     darkerGrey: 'rgb(47,47,47,0.2)',
     darkGrey: 'rgb(159,159,159,1)',

@@ -104,7 +104,7 @@ const ContinueBttn = styled.button`
   margin-right: 100px;
   background-image: ${(props) => props.theme.color.primary};
   border: none;
-  border-radius: 25px;
+  border-radius: 100px;
   color: white;
   font-weight: 800;
   font-size: 0.8rem;

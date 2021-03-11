@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import ChooseHelp from '../components/ChooseHelp';
+import Confirmation from '../components/Confirmation';
 import DogPicture from '../components/DogPicture';
+import Form from '../components/Form';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
@@ -24,7 +26,9 @@ const layout = () => {
       <Navbar />
       <Section>
         <Wrapper>
-          <ChooseHelp></ChooseHelp>
+          {/* <ChooseHelp></ChooseHelp> */}
+          {/* <Form></Form> */}
+          <Confirmation></Confirmation>
           <DogPicture></DogPicture>
         </Wrapper>
       </Section>
