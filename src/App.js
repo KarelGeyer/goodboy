@@ -1,12 +1,15 @@
 import './App.css';
-import Layout from "./layout/Layout" ;
-
+import Layout from './layout/Layout';
+import { ThemeProvider } from 'styled-components';
+import Theme from './layout/Theme';
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={Theme}>
+      <div className="App">
         <Layout></Layout>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

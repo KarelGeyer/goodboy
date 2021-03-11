@@ -13,18 +13,18 @@ const NavbarSection = styled.section `
     align-items: center;
 `
 const NavbarText = styled.p `
-width: 700px;
-font-size: 0.8rem;
-font-family: sans-serif;
-color: rgb(159,159,159,1);
+    width: 700px;
+    font-size: 0.8rem;
+    font-family: sans-serif;
+    color: rgb(159,159,159,1);
 `
 const IconsWrapper = styled.div `
-width: 400px;
-display: flex;
-justify-content: flex-start;
+    width: 400px;
+    display: flex;
+    justify-content: flex-start;
 `
 const Icon = styled.img `
-margin-left: 20px;
+    margin-left: 20px;
 `
 
 const Navbar = () => {
