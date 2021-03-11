@@ -7,13 +7,12 @@ const FooterSection = styled.section`
   left: 0;
   bottom: 0;
   width: 100%;
-  position: fixed;
   display: flex;
   justify-content: center;
 `;
 const FooterWrapper = styled.div`
   height: 400px;
-  width: 1340px;
+  width: 90%;
   border-top: 1px solid rgb(47, 47, 47, 0.16);
   display: flex;
   justify-content: space-between;
