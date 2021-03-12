@@ -10,6 +10,7 @@ const initialState = {
       surname: '',
       email: '',
       phoneNumber: '',
+      shelterID: '',
     },
   ],
 };

@@ -188,10 +188,12 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [clicked, setClicked] = useState(true);
   const [shelters, setShelters] = useState('');
+
   /**Redux consts */
   const [helpValue, setHelpValue] = useState();
   const [shelterValue, setShelterValue] = useState('');
   const [donationValue, setDonationValue] = useState();
+
   /**FCE to change color and store data to const */
   const chooseHelp = (e) => {
     setClicked(!clicked);
@@ -201,10 +203,12 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const storeValueOnChange = (e) => {
     setShelterValue(e.target.value);
   };
+
   /**Store a chosen donation value */
   const storeDonationValueOnClick = (e) => {
     setDonationValue(e.target.innerText);
   };
+
   /**GET response from API */
   useEffect(() => {
     axios
@@ -216,12 +220,14 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
         console.log(err);
       });
   }, []);
+
   /**Store data in Redux upon confirmation */
   const storeDataOnConfirmation = () => {
     setUserInfo({
       helpValue: helpValue,
       shelterValue: shelterValue,
       donationValue: donationValue,
+      shelterID: '',
       name: '',
       surname: '',
       email: '',
@@ -257,7 +263,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
           <datalist id="shelters">
             {!!shelters ? (
               shelters.map((shelter) => {
-                return <option key={shelter.name}>{shelter.name}</option>;
+                return <option key={shelter.id}>{shelter.name}</option>;
               })
             ) : (
               <option>seznam sa načítá...</option>
@@ -267,13 +273,13 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
         <Wrapper>
           <BoldText>Suma, ktorou chcem prispieť</BoldText>
           <DonationWrapper>
-            <Donation onClick={storeDonationValueOnClick}>5 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>10 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>20 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>30 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>50 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>100 E</Donation>
-            <Donation onClick={storeDonationValueOnClick}>......E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>5</Donation>
+            <Donation onClick={storeDonationValueOnClick}>10</Donation>
+            <Donation onClick={storeDonationValueOnClick}>20</Donation>
+            <Donation onClick={storeDonationValueOnClick}>30</Donation>
+            <Donation onClick={storeDonationValueOnClick}>50</Donation>
+            <Donation onClick={storeDonationValueOnClick}>100</Donation>
+            <Donation onClick={storeDonationValueOnClick}>......0</Donation>
           </DonationWrapper>
         </Wrapper>
         <ButtonWrapper>

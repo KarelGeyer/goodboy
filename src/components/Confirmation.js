@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 const Section = styled.section`
   height: 800px;
@@ -81,7 +82,7 @@ const BackBttn = styled.button`
 `;
 
 const Confirmation = ({ setUserInfo, userInfo }) => {
-  console.log(userInfo);
+  /**Initial Consts */
   userInfo = userInfo.userInfo;
   const donationValue = userInfo.donationValue;
   const helpValue = userInfo.helpValue;
@@ -90,6 +91,28 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
   const userSurname = userInfo.surname;
   const email = userInfo.email;
   const phoneNumber = userInfo.phoneNumber;
+
+  /**POST data in API */
+  const confirmInfo = () => {
+    axios
+      .post(
+        'https://frontend-assignment-api.goodrequest.com/api/v1/shelters/contribute',
+        {
+          firstName: userName,
+          lastName: userSurname,
+          email: email,
+          value: donationValue,
+          phone: phoneNumber,
+          shelterIDoptional: 1,
+        },
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <Section>
@@ -126,12 +149,11 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
           <Checker type="checkbox"></Checker>
           <Text>Súhlasím so spracování mojich osobných údajou</Text>
         </CheckerWrapper>
-
         <ButtonWrapper>
           <Link to="form">
             <BackBttn>Spať</BackBttn>
           </Link>
-          <ContinueBttn>Potvrdit</ContinueBttn>
+          <ContinueBttn onClick={confirmInfo}>Potvrdit</ContinueBttn>
         </ButtonWrapper>
       </Section>
     </>

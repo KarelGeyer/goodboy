@@ -53,6 +53,10 @@ const ContinueBttn = styled.button`
   font-size: 0.8rem;
   outline: none;
 `;
+const ContinueBttnNotActive = styled(ContinueBttn)`
+  background-image: none;
+  background-color: ${(props) => props.theme.color.darkGrey};
+`;
 const BackBttn = styled.button`
   height: 53px;
   width: 73px;
@@ -70,6 +74,7 @@ const BoldText = styled.p`
 `;
 
 const Form = ({ setUserInfo, userInfo }) => {
+  /**Initial consts */
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
@@ -78,6 +83,7 @@ const Form = ({ setUserInfo, userInfo }) => {
   const helpValue = userInfo.userInfo.helpValue;
   const shelterValue = userInfo.userInfo.shelterValue;
 
+  /**Store Data in Redux */
   const storeData = () => {
     setUserInfo({
       helpValue: helpValue,
@@ -89,7 +95,6 @@ const Form = ({ setUserInfo, userInfo }) => {
       phoneNumber: phoneNumber,
     });
   };
-  console.log(userInfo.userInfo.helpValue);
   return (
     <>
       <Section>
@@ -125,9 +130,13 @@ const Form = ({ setUserInfo, userInfo }) => {
           <Link to="/">
             <BackBttn>Spať</BackBttn>
           </Link>
-          <Link to="confirm">
-            <ContinueBttn onClick={storeData}>Pokračovať</ContinueBttn>
-          </Link>
+          {email === '' || email === undefined ? (
+            <ContinueBttnNotActive> Pokračovať </ContinueBttnNotActive>
+          ) : (
+            <Link to="confirm">
+              <ContinueBttn onClick={storeData}>Pokračovať</ContinueBttn>
+            </Link>
+          )}
         </ButtonWrapper>
       </Section>
     </>
