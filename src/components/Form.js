@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Section = styled.section`
@@ -17,12 +18,16 @@ const H1 = styled.h1`
   line-height: 52px;
   text-align: start;
 `;
-const Input = styled.textarea`
+const Input = styled.input`
   height: 65px;
   width: 550px;
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 7px;
   padding-left: 15px;
+  outline: none;
+  :focus {
+    border: 2px solid ${(props) => props.theme.color.borderActive};
+  }
 `;
 const FormWrapper = styled.div`
   height: 350px;
@@ -44,6 +49,7 @@ const ContinueBttn = styled.button`
   color: white;
   font-weight: 800;
   font-size: 0.8rem;
+  outline: none;
 `;
 const BackBttn = styled.button`
   height: 53px;
@@ -54,6 +60,7 @@ const BackBttn = styled.button`
   color: black;
   font-weight: 800;
   font-size: 0.8rem;
+  outline: none;
 `;
 const BoldText = styled.p`
   font-weight: bold;
@@ -73,8 +80,12 @@ const Form = () => {
           <Input placeholder="+421"></Input>
         </FormWrapper>
         <ButtonWrapper>
-          <BackBttn>Spať</BackBttn>
-          <ContinueBttn>Pokračovať</ContinueBttn>
+          <Link to="/">
+            <BackBttn>Spať</BackBttn>
+          </Link>
+          <Link to="confirm">
+            <ContinueBttn>Pokračovať</ContinueBttn>
+          </Link>
         </ButtonWrapper>
       </Section>
     </>

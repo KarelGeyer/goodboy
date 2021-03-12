@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Section = styled.section`
@@ -29,9 +30,12 @@ const TextWrapper = styled.div`
   text-align: start;
 `;
 const BoldText = styled.p`
-  font-weight: bold;
+  font-weight: 800;
   align-self: flex-start;
   line-height: 1.5;
+`;
+const Text = styled.p`
+  font-weight: 500;
 `;
 const CheckerWrapper = styled.div`
   width: 570px;
@@ -60,6 +64,7 @@ const ContinueBttn = styled.button`
   color: white;
   font-weight: 800;
   font-size: 0.8rem;
+  outline: none;
 `;
 const BackBttn = styled.button`
   height: 53px;
@@ -70,6 +75,7 @@ const BackBttn = styled.button`
   color: black;
   font-weight: 800;
   font-size: 0.8rem;
+  outline: none;
 `;
 
 const Confirmation = () => {
@@ -80,37 +86,39 @@ const Confirmation = () => {
         <FormWrapper>
           <TextWrapper>
             <BoldText>Akou formou chcem pomocť</BoldText>
-            <p>Chcem finančne prispět celej nadácii</p>
+            <Text>Chcem finančne prispět celej nadácii</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Najviac mi záleží na útulku</BoldText>
-            <p>Mestský útulok, Žilina</p>
+            <Text>Mestský útulok, Žilina</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Suma, ktorou chcem pomocť</BoldText>
-            <p>50 E</p>
+            <Text>50 E</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Meno a priezvisko</BoldText>
-            <p>Petr Reguli</p>
+            <Text>Petr Reguli</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>E-mailová adresa</BoldText>
-            <p>petr.reguli@goodrequest.com</p>
+            <Text>petr.reguli@goodrequest.com</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Telefónne číslo</BoldText>
-            <p>+421 902 237 207</p>
+            <Text>+421 902 237 207</Text>
           </TextWrapper>
         </FormWrapper>
         <CheckerWrapper>
           <Checker type="checkbox"></Checker>
-          <p>Súhlasím so spracování mojich osobných údajou</p>
+          <Text>Súhlasím so spracování mojich osobných údajou</Text>
         </CheckerWrapper>
 
         <ButtonWrapper>
-          <BackBttn>Spať</BackBttn>
-          <ContinueBttn>Pokračovať</ContinueBttn>
+          <Link to="form">
+            <BackBttn>Spať</BackBttn>
+          </Link>
+          <ContinueBttn>Potvrdit</ContinueBttn>
         </ButtonWrapper>
       </Section>
     </>

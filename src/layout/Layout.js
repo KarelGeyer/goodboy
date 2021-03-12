@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from 'react-router';
 import styled from 'styled-components';
 import ChooseHelp from '../components/ChooseHelp';
 import Confirmation from '../components/Confirmation';
@@ -26,10 +27,12 @@ const layout = () => {
       <Navbar />
       <Section>
         <Wrapper>
-          {/* <ChooseHelp></ChooseHelp> */}
-          {/* <Form></Form> */}
-          <Confirmation></Confirmation>
-          <DogPicture></DogPicture>
+          <Switch>
+            <Route path="/" exact component={ChooseHelp}></Route>
+            <Route path="/form" exact component={Form}></Route>
+            <Route path="/confirm" exact component={Confirmation}></Route>
+          </Switch>
+          <DogPicture />
         </Wrapper>
       </Section>
       <Footer />
