@@ -4,6 +4,8 @@ import wallet from '../assets/wallet.png';
 import paw from '../assets/paw.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { setUserInfo } from '../redux/actions/userInfo.action';
+import { connect } from 'react-redux';
 
 const Section = styled.section`
   height: 800px;
@@ -167,6 +169,10 @@ const ContinueBttn = styled.button`
   font-size: 0.8rem;
   outline: none;
 `;
+const ContinueBttnNotActive = styled(ContinueBttn)`
+  background-image: none;
+  background-color: ${(props) => props.theme.color.darkGrey};
+`;
 const IconWrapper = styled.div`
   height: 80px;
   width: 80px;
@@ -178,16 +184,28 @@ const IconWrapper = styled.div`
 `;
 const Icon = styled.img``;
 
-const ChooseHelp = () => {
+const ChooseHelp = ({ setUserInfo, userInfo }) => {
+  /**Initial consts */
   const [clicked, setClicked] = useState(true);
   const [shelters, setShelters] = useState('');
+  /**Redux consts */
   const [helpValue, setHelpValue] = useState();
   const [shelterValue, setShelterValue] = useState('');
   const [donationValue, setDonationValue] = useState();
+  /**FCE to change color and store data to const */
   const chooseHelp = (e) => {
     setClicked(!clicked);
     setHelpValue(e.target.innerText);
   };
+  /**Store a chosen shelter */
+  const storeValueOnChange = (e) => {
+    setShelterValue(e.target.value);
+  };
+  /**Store a chosen donation value */
+  const storeDonationValueOnClick = (e) => {
+    setDonationValue(e.target.innerText);
+  };
+  /**GET response from API */
   useEffect(() => {
     axios
       .get('https://frontend-assignment-api.goodrequest.com/api/v1/shelters')
@@ -198,13 +216,18 @@ const ChooseHelp = () => {
         console.log(err);
       });
   }, []);
-  const storeValueOnChange = (e) => {
-    setShelterValue(e.target.value);
+  /**Store data in Redux upon confirmation */
+  const storeDataOnConfirmation = () => {
+    setUserInfo({
+      helpValue: helpValue,
+      shelterValue: shelterValue,
+      donationValue: donationValue,
+      name: '',
+      surname: '',
+      email: '',
+      phoneNumber: '',
+    });
   };
-  const storeDonationValueOnClick = (e) => {
-    setDonationValue(e.target.innerText);
-  };
-  console.log(helpValue);
   return (
     <>
       <Section>
@@ -234,7 +257,7 @@ const ChooseHelp = () => {
           <datalist id="shelters">
             {!!shelters ? (
               shelters.map((shelter) => {
-                return <option>{shelter.name}</option>;
+                return <option key={shelter.name}>{shelter.name}</option>;
               })
             ) : (
               <option>seznam sa načítá...</option>
@@ -254,13 +277,22 @@ const ChooseHelp = () => {
           </DonationWrapper>
         </Wrapper>
         <ButtonWrapper>
-          <Link to="/form">
-            <ContinueBttn>Pokračovať</ContinueBttn>
-          </Link>
+          {shelterValue === '' || donationValue === '' ? (
+            <ContinueBttnNotActive>Pokračovať</ContinueBttnNotActive>
+          ) : (
+            <Link to="/form">
+              <ContinueBttn onClick={storeDataOnConfirmation}>
+                Pokračovať
+              </ContinueBttn>
+            </Link>
+          )}
         </ButtonWrapper>
       </Section>
     </>
   );
 };
 
-export default ChooseHelp;
+const mapStateToProps = (state) => ({
+  userInfo: state.userInfo,
+});
+export default connect(mapStateToProps, { setUserInfo })(ChooseHelp);

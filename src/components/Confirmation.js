@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { setUserInfo } from '../redux/actions/userInfo.action';
+import { connect } from 'react-redux';
 
 const Section = styled.section`
   height: 800px;
@@ -78,7 +80,16 @@ const BackBttn = styled.button`
   outline: none;
 `;
 
-const Confirmation = () => {
+const Confirmation = ({ setUserInfo, userInfo }) => {
+  console.log(userInfo);
+  userInfo = userInfo.userInfo;
+  const donationValue = userInfo.donationValue;
+  const helpValue = userInfo.helpValue;
+  const shelterValue = userInfo.shelterValue;
+  const userName = userInfo.name;
+  const userSurname = userInfo.surname;
+  const email = userInfo.email;
+  const phoneNumber = userInfo.phoneNumber;
   return (
     <>
       <Section>
@@ -86,27 +97,29 @@ const Confirmation = () => {
         <FormWrapper>
           <TextWrapper>
             <BoldText>Akou formou chcem pomocť</BoldText>
-            <Text>Chcem finančne prispět celej nadácii</Text>
+            <Text>{helpValue}</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Najviac mi záleží na útulku</BoldText>
-            <Text>Mestský útulok, Žilina</Text>
+            <Text>{shelterValue}</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Suma, ktorou chcem pomocť</BoldText>
-            <Text>50 E</Text>
+            <Text>{donationValue}</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Meno a priezvisko</BoldText>
-            <Text>Petr Reguli</Text>
+            <Text>
+              {userName} {userSurname}
+            </Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>E-mailová adresa</BoldText>
-            <Text>petr.reguli@goodrequest.com</Text>
+            <Text>{email}</Text>
           </TextWrapper>
           <TextWrapper>
             <BoldText>Telefónne číslo</BoldText>
-            <Text>+421 902 237 207</Text>
+            <Text>{phoneNumber}</Text>
           </TextWrapper>
         </FormWrapper>
         <CheckerWrapper>
@@ -125,4 +138,7 @@ const Confirmation = () => {
   );
 };
 
-export default Confirmation;
+const mapStateToProps = (state) => ({
+  userInfo: state.userInfo,
+});
+export default connect(mapStateToProps, { setUserInfo })(Confirmation);

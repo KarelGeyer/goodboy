@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { setUserInfo } from '../redux/actions/userInfo.action';
+import { connect } from 'react-redux';
 
 const Section = styled.section`
   height: 800px;
@@ -67,13 +69,27 @@ const BoldText = styled.p`
   align-self: flex-start;
 `;
 
-const Form = () => {
+const Form = ({ setUserInfo, userInfo }) => {
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
+  const donationValue = userInfo.userInfo.donationValue;
+  const helpValue = userInfo.userInfo.helpValue;
+  const shelterValue = userInfo.userInfo.shelterValue;
 
-  console.log(name, surname, email, phoneNumber);
+  const storeData = () => {
+    setUserInfo({
+      helpValue: helpValue,
+      shelterValue: shelterValue,
+      donationValue: donationValue,
+      name: name,
+      surname: surname,
+      email: email,
+      phoneNumber: phoneNumber,
+    });
+  };
+  console.log(userInfo.userInfo.helpValue);
   return (
     <>
       <Section>
@@ -110,7 +126,7 @@ const Form = () => {
             <BackBttn>Spať</BackBttn>
           </Link>
           <Link to="confirm">
-            <ContinueBttn>Pokračovať</ContinueBttn>
+            <ContinueBttn onClick={storeData}>Pokračovať</ContinueBttn>
           </Link>
         </ButtonWrapper>
       </Section>
@@ -118,4 +134,7 @@ const Form = () => {
   );
 };
 
-export default Form;
+const mapStateToProps = (state) => ({
+  userInfo: state.userInfo,
+});
+export default connect(mapStateToProps, { setUserInfo })(Form);

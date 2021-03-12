@@ -16,7 +16,7 @@ const Section = styled.section`
 const Wrapper = styled.div`
   height: 950px;
   display: flex;
-  width: 1200px;
+  max-width: 1200px;
   border: 1px solid black;
   justify-content: flex-end;
 `;
