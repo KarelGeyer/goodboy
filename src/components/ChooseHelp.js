@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import wallet from '../assets/wallet.png';
 import paw from '../assets/paw.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Section = styled.section`
   height: 800px;
@@ -179,10 +180,31 @@ const Icon = styled.img``;
 
 const ChooseHelp = () => {
   const [clicked, setClicked] = useState(true);
-  const chooseHelp = () => {
+  const [shelters, setShelters] = useState('');
+  const [helpValue, setHelpValue] = useState();
+  const [shelterValue, setShelterValue] = useState('');
+  const [donationValue, setDonationValue] = useState();
+  const chooseHelp = (e) => {
     setClicked(!clicked);
+    setHelpValue(e.target.innerText);
   };
-  console.log(clicked);
+  useEffect(() => {
+    axios
+      .get('https://frontend-assignment-api.goodrequest.com/api/v1/shelters')
+      .then((res) => {
+        setShelters(res.data.shelters);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const storeValueOnChange = (e) => {
+    setShelterValue(e.target.value);
+  };
+  const storeDonationValueOnClick = (e) => {
+    setDonationValue(e.target.innerText);
+  };
+  console.log(helpValue);
   return (
     <>
       <Section>
@@ -203,18 +225,32 @@ const ChooseHelp = () => {
         </ButtonsWrapper>
         <Wrapper>
           <BoldText>Najviac mi záleží na útulku</BoldText>
-          <Input type="text" placeholder="Vyberte útulok zo zoznamu"></Input>
+          <Input
+            type="text"
+            placeholder="Vyberte útulok zo zoznamu"
+            list="shelters"
+            onChange={storeValueOnChange}
+          ></Input>
+          <datalist id="shelters">
+            {!!shelters ? (
+              shelters.map((shelter) => {
+                return <option>{shelter.name}</option>;
+              })
+            ) : (
+              <option>seznam sa načítá...</option>
+            )}
+          </datalist>
         </Wrapper>
         <Wrapper>
           <BoldText>Suma, ktorou chcem prispieť</BoldText>
           <DonationWrapper>
-            <Donation>5 E</Donation>
-            <Donation>10 E</Donation>
-            <Donation>20 E</Donation>
-            <Donation>30 E</Donation>
-            <Donation>50 E</Donation>
-            <Donation>100 E</Donation>
-            <Donation>......E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>5 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>10 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>20 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>30 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>50 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>100 E</Donation>
+            <Donation onClick={storeDonationValueOnClick}>......E</Donation>
           </DonationWrapper>
         </Wrapper>
         <ButtonWrapper>

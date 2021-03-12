@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -68,16 +68,42 @@ const BoldText = styled.p`
 `;
 
 const Form = () => {
+  const [name, setName] = useState();
+  const [surname, setSurname] = useState();
+  const [email, setEmail] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+
+  console.log(name, surname, email, phoneNumber);
   return (
     <>
       <Section>
         <H1>Potrebujeme od Vás zopár informácií</H1>
         <FormWrapper>
           <BoldText>O vás</BoldText>
-          <Input placeholder="Zadejte Vaše meno"></Input>
-          <Input placeholder="Zadejte Vaše priezvisko"></Input>
-          <Input placeholder="Zadejte Vás e-mail"></Input>
-          <Input placeholder="+421"></Input>
+          <Input
+            placeholder="Zadejte Vaše meno"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          ></Input>
+          <Input
+            placeholder="Zadejte Vaše priezvisko"
+            onChange={(e) => {
+              setSurname(e.target.value);
+            }}
+          ></Input>
+          <Input
+            placeholder="Zadejte Vás e-mail"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          ></Input>
+          <Input
+            placeholder="+421"
+            onChange={(e) => {
+              setPhoneNumber(e.target.value);
+            }}
+          ></Input>
         </FormWrapper>
         <ButtonWrapper>
           <Link to="/">
