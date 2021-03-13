@@ -136,7 +136,7 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
         console.log(err);
       });
   };
-  console.log(userInfo);
+  console.log(userInfo.shelterID);
   return (
     <>
       <Section>

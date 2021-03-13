@@ -138,6 +138,29 @@ const Input = styled.input`
   border-radius: 10px;
   padding-left: 15px;
 `;
+const DropDownMenu = styled.div`
+  display: ${(props) => (props.dropDownMenu ? 'none' : 'block')};
+  position: absolute;
+  height: 250px;
+  width: 350px;
+  border: 1px solid ${(props) => props.theme.color.borderActive};
+  border-right: none;
+  border-radius: 15px;
+  background: white;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-top: 345px;
+`;
+const DropDownItem = styled.div`
+  height: 40px;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 5px;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+`;
 
 const DonationWrapper = styled.div`
   display: flex;
@@ -204,14 +227,19 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const [clicked, setClicked] = useState(true);
   const [shelters, setShelters] = useState('');
   const [submit, setSubmit] = useState('');
+  const [dropDownMenu, setDropDownMenu] = useState(true);
 
   /**Redux consts */
   const [helpValue, setHelpValue] = useState(
     'Chcem finančne prispieť celej nadácii',
   );
+  const [shelterId, setShelderId] = useState();
   const [shelterValue, setShelterValue] = useState('');
   const [donationValue, setDonationValue] = useState();
 
+  const showDropDownMenu = () => {
+    setDropDownMenu(!dropDownMenu);
+  };
   /**FCE to change color and store data to const */
   const chooseHelp = (e) => {
     setClicked(!clicked);
@@ -228,7 +256,6 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
       ? setDonationValue(e.target.value)
       : setDonationValue(e.target.innerText);
   };
-  console.log(donationValue);
   /**GET response from API */
   useEffect(() => {
     axios
@@ -246,13 +273,14 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
       helpValue: helpValue,
       shelterValue: shelterValue,
       donationValue: donationValue,
-      shelterID: '',
+      shelterID: shelterId,
       name: '',
       surname: '',
       email: '',
       phoneNumber: '',
     });
   };
+  console.log(shelterValue);
   return (
     <>
       <Section>
@@ -282,22 +310,44 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             <BoldText>Najviac mi záleží na útulku</BoldText>
             {helpValue === 'Chcem finančne prispieť celej nadácii' ? (
               <Input
+                onClick={showDropDownMenu}
                 type="text"
                 placeholder="Vyberte útulok zo zoznamu"
                 list="shelters"
                 onChange={storeValueOnChange}
+                value={shelterValue}
               />
             ) : (
               <Input
-                type="text"
+                onClick={showDropDownMenu}
                 placeholder="Vyberte útulok zo zoznamu"
                 list="shelters"
                 onChange={storeValueOnChange}
                 required
+                value={shelterValue}
               ></Input>
             )}
-
-            <datalist id="shelters">
+            <DropDownMenu dropDownMenu={dropDownMenu}>
+              {!!shelters ? (
+                shelters.map((shelter) => {
+                  return (
+                    <DropDownItem
+                      key={shelter.id}
+                      onClick={() => {
+                        setShelterValue(shelter.name);
+                        setShelderId(shelter.id);
+                        setDropDownMenu(true);
+                      }}
+                    >
+                      {shelter.name}
+                    </DropDownItem>
+                  );
+                })
+              ) : (
+                <option>seznam sa načítá...</option>
+              )}
+            </DropDownMenu>
+            {/* <datalist id="shelters">
               {!!shelters ? (
                 shelters.map((shelter) => {
                   return <option key={shelter.id}>{shelter.name}</option>;
@@ -305,7 +355,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
               ) : (
                 <option>seznam sa načítá...</option>
               )}
-            </datalist>
+            </datalist> */}
           </Wrapper>
           <Wrapper>
             <BoldText>Suma, ktorou chcem prispieť</BoldText>
@@ -318,6 +368,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
               <Donation onClick={storeDonationValueOnClick}>100</Donation>
               <CustomDonation
                 onChange={storeDonationValueOnClick}
+                onClick={showDropDownMenu}
                 type="text"
                 placeholder="...."
               ></CustomDonation>

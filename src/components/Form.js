@@ -129,7 +129,8 @@ const Form = ({ setUserInfo, userInfo }) => {
   const donationValue = userInfo.userInfo.donationValue;
   const helpValue = userInfo.userInfo.helpValue;
   const shelterValue = userInfo.userInfo.shelterValue;
-
+  const shelterId = userInfo.userInfo.shelterID;
+  console.log(userInfo);
   const changeCountry = () => {
     setSrcHandeler(!srcHandeler);
     if (srcHandeler === true) {
@@ -146,13 +147,14 @@ const Form = ({ setUserInfo, userInfo }) => {
       helpValue: helpValue,
       shelterValue: shelterValue,
       donationValue: donationValue,
+      shelterID: shelterId,
       name: name,
       surname: surname,
       email: email,
       phoneNumber: phoneNumber,
     });
   };
-  console.log(phoneNumber);
+  console.log(userInfo.userInfo.shelterID);
   return (
     <>
       <Section>
@@ -203,7 +205,7 @@ const Form = ({ setUserInfo, userInfo }) => {
                 type="tel"
                 pattern="[0-9]{9}"
                 onChange={(e) => {
-                  setPhoneNumber(parseInt(countryNum) + e.target.value);
+                  setPhoneNumber(e.target.value);
                 }}
               ></PhoneNumType>
             </PhoneNumWrapper>
