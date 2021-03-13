@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
+import CzIcon from '../assets/czech.png';
+import SkIcon from '../assets/slovakia.png';
 
 const Section = styled.section`
   height: 800px;
@@ -31,6 +33,48 @@ const Input = styled.input`
     border: 2px solid ${(props) => props.theme.color.borderActive};
   }
 `;
+const PhoneNumWrapper = styled.div`
+  height: 65px;
+  width: 550px;
+  display: flex;
+`;
+const PhoneNumCountry = styled.div`
+  height: 65px;
+  width: 100px;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border-right: none;
+  border-radius: 7px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-left: 15px;
+  outline: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  :focus {
+    border: 2px solid ${(props) => props.theme.color.borderActive};
+  }
+`;
+const PhoneNumType = styled.input`
+  height: 65px;
+  width: 450px;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border-left: none;
+  border-radius: 7px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 15px;
+  outline: none;
+  :focus {
+    border: 2px solid ${(props) => props.theme.color.borderActive};
+  }
+`;
+const FlagIcon = styled.img`
+  height: 30px;
+  width: 30px;
+  background: ${SkIcon};
+`;
+
 const FormWrapper = styled.div`
   height: 350px;
   display: flex;
@@ -45,7 +89,7 @@ const ButtonWrapper = styled.div`
 const ContinueBttn = styled.button`
   height: 53px;
   width: 116px;
-  background-color: ${(props) => props.theme.color.darkGrey};
+  background-image: ${(props) => props.theme.color.primary};
   border: none;
   border-radius: 100px;
   color: white;
@@ -70,7 +114,6 @@ const BackBttn = styled.button`
 `;
 const BoldText = styled.p`
   font-weight: bold;
-  align-self: flex-start;
 `;
 
 const Form = ({ setUserInfo, userInfo }) => {
@@ -78,11 +121,25 @@ const Form = ({ setUserInfo, userInfo }) => {
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
+  const [submit, setSubmit] = useState('');
   const [phoneNumber, setPhoneNumber] = useState();
+  const [srcHandeler, setSrcHandeler] = useState(true);
+  const [countryFlag, setCountryFlag] = useState(SkIcon);
+  const [countryNum, setCountryNum] = useState('+421');
   const donationValue = userInfo.userInfo.donationValue;
   const helpValue = userInfo.userInfo.helpValue;
   const shelterValue = userInfo.userInfo.shelterValue;
 
+  const changeCountry = () => {
+    setSrcHandeler(!srcHandeler);
+    if (srcHandeler === true) {
+      setCountryNum('+421');
+      setCountryFlag(SkIcon);
+    } else {
+      setCountryNum('+420');
+      setCountryFlag(CzIcon);
+    }
+  };
   /**Store Data in Redux */
   const storeData = () => {
     setUserInfo({
@@ -95,49 +152,84 @@ const Form = ({ setUserInfo, userInfo }) => {
       phoneNumber: phoneNumber,
     });
   };
+  console.log(phoneNumber);
   return (
     <>
       <Section>
         <H1>Potrebujeme od Vás zopár informácií</H1>
-        <FormWrapper>
-          <BoldText>O vás</BoldText>
-          <Input
-            placeholder="Zadejte Vaše meno"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          ></Input>
-          <Input
-            placeholder="Zadejte Vaše priezvisko"
-            onChange={(e) => {
-              setSurname(e.target.value);
-            }}
-          ></Input>
-          <Input
-            placeholder="Zadejte Vás e-mail"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          ></Input>
-          <Input
-            placeholder="+421"
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-            }}
-          ></Input>
-        </FormWrapper>
-        <ButtonWrapper>
-          <Link to="/">
-            <BackBttn>Spať</BackBttn>
-          </Link>
-          {email === '' || email === undefined ? (
-            <ContinueBttnNotActive> Pokračovať </ContinueBttnNotActive>
-          ) : (
-            <Link to="confirm">
-              <ContinueBttn onClick={storeData}>Pokračovať</ContinueBttn>
+        <form
+          onChange={(e) => {}}
+          onSubmit={(e) => {
+            setSubmit(e);
+            e.preventDefault();
+          }}
+        >
+          <FormWrapper>
+            <BoldText>O vás</BoldText>
+            <Input
+              placeholder="Zadejte Vaše meno"
+              pattern="[A-Za-z]{2,20}"
+              title="Jméno musí obsahovat 2 až 20 znaků, zadejte prosím Vaše jméno v platném formátu"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            ></Input>
+            <Input
+              required
+              pattern="[A-Za-z]{2,30}"
+              title="Příjmení musí obsahovat 2 až 30 znaků, zadejte prosím Vaše příjmení v platném formátu"
+              placeholder="Zadejte Vaše priezvisko"
+              onChange={(e) => {
+                setSurname(e.target.value);
+              }}
+            ></Input>
+            <Input
+              type="email"
+              placeholder="Zadejte Vás e-mail"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            ></Input>
+            <PhoneNumWrapper>
+              <PhoneNumCountry type="text">
+                <FlagIcon
+                  src={countryFlag}
+                  alt=""
+                  onClick={changeCountry}
+                ></FlagIcon>
+                <BoldText>{countryNum}</BoldText>
+              </PhoneNumCountry>
+              <PhoneNumType
+                type="tel"
+                pattern="[0-9]{9}"
+                onChange={(e) => {
+                  setPhoneNumber(parseInt(countryNum) + e.target.value);
+                }}
+              ></PhoneNumType>
+            </PhoneNumWrapper>
+          </FormWrapper>
+          <ButtonWrapper>
+            <Link to="/">
+              <BackBttn>Spať</BackBttn>
             </Link>
-          )}
-        </ButtonWrapper>
+            {submit === '' || submit === undefined ? (
+              <ContinueBttnNotActive type="submit">
+                Potvrdit
+              </ContinueBttnNotActive>
+            ) : (
+              <Link to="confirm">
+                <ContinueBttn
+                  type="submit"
+                  onClick={() => {
+                    storeData();
+                  }}
+                >
+                  Pokračovať
+                </ContinueBttn>
+              </Link>
+            )}
+          </ButtonWrapper>
+        </form>
       </Section>
     </>
   );

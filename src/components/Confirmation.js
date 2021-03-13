@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import checker from '../assets/checker.jpg';
 
 const Section = styled.section`
   height: 800px;
@@ -52,6 +53,17 @@ const Checker = styled.input`
   border-radius: 25px;
   align-self: start;
   margin-right: 15px;
+  ::after {
+    content: '';
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    background-color: white;
+    border: 1px solid black;
+    background-image: url(${(props) => (props.checked ? checker : 'none')});
+    background-size: 28px;
+    background-repeat: no-repeat;
+  }
 `;
 const ButtonWrapper = styled.div`
   width: 550px;
@@ -61,7 +73,10 @@ const ButtonWrapper = styled.div`
 const ContinueBttn = styled.button`
   height: 53px;
   width: 116px;
-  background-color: ${(props) => props.theme.color.darkGrey};
+  background-color: ${(props) =>
+    props.active ? props.theme.color.darkGrey : 'none'};
+  background-image: ${(props) =>
+    props.active ? 'none' : props.theme.color.primary};
   border: none;
   border-radius: 100px;
   color: white;
@@ -69,6 +84,7 @@ const ContinueBttn = styled.button`
   font-size: 0.8rem;
   outline: none;
 `;
+
 const BackBttn = styled.button`
   height: 53px;
   width: 73px;
@@ -91,6 +107,13 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
   const userSurname = userInfo.surname;
   const email = userInfo.email;
   const phoneNumber = userInfo.phoneNumber;
+  const [checked, setChecked] = useState(false);
+  const [active, setActive] = useState(true);
+
+  const CheckHandeler = () => {
+    setChecked(!checked);
+    setActive(!active);
+  };
 
   /**POST data in API */
   const confirmInfo = () => {
@@ -113,48 +136,58 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
         console.log(err);
       });
   };
+  console.log(userInfo);
   return (
     <>
       <Section>
         <H1>Skontrolujte si zadané údaje</H1>
-        <FormWrapper>
-          <TextWrapper>
-            <BoldText>Akou formou chcem pomocť</BoldText>
-            <Text>{helpValue}</Text>
-          </TextWrapper>
-          <TextWrapper>
-            <BoldText>Najviac mi záleží na útulku</BoldText>
-            <Text>{shelterValue}</Text>
-          </TextWrapper>
-          <TextWrapper>
-            <BoldText>Suma, ktorou chcem pomocť</BoldText>
-            <Text>{donationValue}</Text>
-          </TextWrapper>
-          <TextWrapper>
-            <BoldText>Meno a priezvisko</BoldText>
-            <Text>
-              {userName} {userSurname}
-            </Text>
-          </TextWrapper>
-          <TextWrapper>
-            <BoldText>E-mailová adresa</BoldText>
-            <Text>{email}</Text>
-          </TextWrapper>
-          <TextWrapper>
-            <BoldText>Telefónne číslo</BoldText>
-            <Text>{phoneNumber}</Text>
-          </TextWrapper>
-        </FormWrapper>
-        <CheckerWrapper>
-          <Checker type="checkbox"></Checker>
-          <Text>Súhlasím so spracování mojich osobných údajou</Text>
-        </CheckerWrapper>
-        <ButtonWrapper>
-          <Link to="form">
-            <BackBttn>Spať</BackBttn>
-          </Link>
-          <ContinueBttn onClick={confirmInfo}>Potvrdit</ContinueBttn>
-        </ButtonWrapper>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <FormWrapper>
+            <TextWrapper>
+              <BoldText>Akou formou chcem pomocť</BoldText>
+              <Text>{helpValue}</Text>
+            </TextWrapper>
+            <TextWrapper>
+              <BoldText>Najviac mi záleží na útulku</BoldText>
+              <Text>{shelterValue}</Text>
+            </TextWrapper>
+            <TextWrapper>
+              <BoldText>Suma, ktorou chcem pomocť</BoldText>
+              <Text>{donationValue}</Text>
+            </TextWrapper>
+            <TextWrapper>
+              <BoldText>Meno a priezvisko</BoldText>
+              <Text>
+                {userName} {userSurname}
+              </Text>
+            </TextWrapper>
+            <TextWrapper>
+              <BoldText>E-mailová adresa</BoldText>
+              <Text>{email}</Text>
+            </TextWrapper>
+            <TextWrapper>
+              <BoldText>Telefónne číslo</BoldText>
+              <Text>{phoneNumber}</Text>
+            </TextWrapper>
+          </FormWrapper>
+          <CheckerWrapper>
+            <Checker
+              type="checkbox"
+              required
+              checked={checked}
+              onClick={CheckHandeler}
+            ></Checker>
+            <p>Súhlasím so spracování mojich osobných údajou</p>
+          </CheckerWrapper>
+          <ButtonWrapper>
+            <Link to="form">
+              <BackBttn>Spať</BackBttn>
+            </Link>
+            <ContinueBttn type="submit" onClick={confirmInfo} active={active}>
+              Potvrdit
+            </ContinueBttn>
+          </ButtonWrapper>
+        </form>
       </Section>
     </>
   );

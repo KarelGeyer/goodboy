@@ -158,6 +158,21 @@ const Donation = styled.button`
     color: white;
   }
 `;
+const CustomDonation = styled.input`
+  height: 53px;
+  min-width: 70px;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border-radius: 5px;
+  background: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  outline: none;
+  text-align: center;
+  :focus {
+    background-image: ${(props) => props.theme.color.primary};
+    color: white;
+  }
+`;
 const ContinueBttn = styled.button`
   height: 53px;
   width: 116px;
@@ -188,9 +203,12 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [clicked, setClicked] = useState(true);
   const [shelters, setShelters] = useState('');
+  const [submit, setSubmit] = useState('');
 
   /**Redux consts */
-  const [helpValue, setHelpValue] = useState();
+  const [helpValue, setHelpValue] = useState(
+    'Chcem finančne prispieť celej nadácii',
+  );
   const [shelterValue, setShelterValue] = useState('');
   const [donationValue, setDonationValue] = useState();
 
@@ -206,9 +224,11 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
 
   /**Store a chosen donation value */
   const storeDonationValueOnClick = (e) => {
-    setDonationValue(e.target.innerText);
+    e.target.innerText === ''
+      ? setDonationValue(e.target.value)
+      : setDonationValue(e.target.innerText);
   };
-
+  console.log(donationValue);
   /**GET response from API */
   useEffect(() => {
     axios
@@ -220,7 +240,6 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
         console.log(err);
       });
   }, []);
-
   /**Store data in Redux upon confirmation */
   const storeDataOnConfirmation = () => {
     setUserInfo({
@@ -252,47 +271,72 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             <BttnText>Chcem finančne prispieť celej nadácii</BttnText>
           </SecondButton>
         </ButtonsWrapper>
-        <Wrapper>
-          <BoldText>Najviac mi záleží na útulku</BoldText>
-          <Input
-            type="text"
-            placeholder="Vyberte útulok zo zoznamu"
-            list="shelters"
-            onChange={storeValueOnChange}
-          ></Input>
-          <datalist id="shelters">
-            {!!shelters ? (
-              shelters.map((shelter) => {
-                return <option key={shelter.id}>{shelter.name}</option>;
-              })
+        <form
+          onSubmit={(e) => {
+            console.log(e);
+            setSubmit(e);
+            e.preventDefault();
+          }}
+        >
+          <Wrapper>
+            <BoldText>Najviac mi záleží na útulku</BoldText>
+            {helpValue === 'Chcem finančne prispieť celej nadácii' ? (
+              <Input
+                type="text"
+                placeholder="Vyberte útulok zo zoznamu"
+                list="shelters"
+                onChange={storeValueOnChange}
+              />
             ) : (
-              <option>seznam sa načítá...</option>
+              <Input
+                type="text"
+                placeholder="Vyberte útulok zo zoznamu"
+                list="shelters"
+                onChange={storeValueOnChange}
+                required
+              ></Input>
             )}
-          </datalist>
-        </Wrapper>
-        <Wrapper>
-          <BoldText>Suma, ktorou chcem prispieť</BoldText>
-          <DonationWrapper>
-            <Donation onClick={storeDonationValueOnClick}>5</Donation>
-            <Donation onClick={storeDonationValueOnClick}>10</Donation>
-            <Donation onClick={storeDonationValueOnClick}>20</Donation>
-            <Donation onClick={storeDonationValueOnClick}>30</Donation>
-            <Donation onClick={storeDonationValueOnClick}>50</Donation>
-            <Donation onClick={storeDonationValueOnClick}>100</Donation>
-            <Donation onClick={storeDonationValueOnClick}>......0</Donation>
-          </DonationWrapper>
-        </Wrapper>
-        <ButtonWrapper>
-          {shelterValue === '' || donationValue === '' ? (
-            <ContinueBttnNotActive>Pokračovať</ContinueBttnNotActive>
-          ) : (
-            <Link to="/form">
-              <ContinueBttn onClick={storeDataOnConfirmation}>
+
+            <datalist id="shelters">
+              {!!shelters ? (
+                shelters.map((shelter) => {
+                  return <option key={shelter.id}>{shelter.name}</option>;
+                })
+              ) : (
+                <option>seznam sa načítá...</option>
+              )}
+            </datalist>
+          </Wrapper>
+          <Wrapper>
+            <BoldText>Suma, ktorou chcem prispieť</BoldText>
+            <DonationWrapper>
+              <Donation onClick={storeDonationValueOnClick}>5</Donation>
+              <Donation onClick={storeDonationValueOnClick}>10</Donation>
+              <Donation onClick={storeDonationValueOnClick}>20</Donation>
+              <Donation onClick={storeDonationValueOnClick}>30</Donation>
+              <Donation onClick={storeDonationValueOnClick}>50</Donation>
+              <Donation onClick={storeDonationValueOnClick}>100</Donation>
+              <CustomDonation
+                onChange={storeDonationValueOnClick}
+                type="text"
+                placeholder="...."
+              ></CustomDonation>
+            </DonationWrapper>
+          </Wrapper>
+          <ButtonWrapper>
+            {submit === '' || submit === undefined || donationValue < 1 ? (
+              <ContinueBttnNotActive type="submit">
                 Pokračovať
-              </ContinueBttn>
-            </Link>
-          )}
-        </ButtonWrapper>
+              </ContinueBttnNotActive>
+            ) : (
+              <Link to="/form">
+                <ContinueBttn type="submit" onClick={storeDataOnConfirmation}>
+                  Pokračovať
+                </ContinueBttn>
+              </Link>
+            )}
+          </ButtonWrapper>
+        </form>
       </Section>
     </>
   );
