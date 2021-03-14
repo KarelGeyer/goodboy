@@ -10,8 +10,10 @@ import { Trans } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 
+/**Styles */
+/**Section */
 const Section = styled.section`
-  height: 800px;
+  height: 830px;
   width: 700px;
   align-self: center;
   display: flex;
@@ -19,6 +21,7 @@ const Section = styled.section`
   justify-content: space-evenly;
   align-items: center;
 `;
+/**Fonts */
 const H1 = styled.h1`
   width: 570px;
   font-size: 49px;
@@ -26,16 +29,70 @@ const H1 = styled.h1`
   line-height: 52px;
   text-align: start;
 `;
+const BoldText = styled.p`
+  font-weight: bold;
+`;
+const BttnText = styled.div`
+  text-align: start;
+  font-weight: 600;
+`;
+/**Wrappers */
 const ButtonsWrapper = styled.div`
   height: 186px;
   width: 560px;
   display: flex;
+`;
+const AsideWrapper = styled.div`
+  width: 570px;
+  height: 1px;
+  display: flex;
+  justify-content: space-between;
 `;
 const TextWrapper = styled.div`
   display: flex;
   width: 550px;
   justify-content: space-between;
 `;
+const ButtonWrapper = styled.div`
+  height: 100px;
+  width: 550px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+`;
+const Wrapper = styled.div`
+  height: 110px;
+  width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+`;
+const DonationWrapper = styled.div`
+  display: flex;
+  width: 530px;
+  justify-content: space-between;
+`;
+const IconWrapper = styled.div`
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.color.darkerGrey};
+  border-radius: 50%;
+`;
+const PageCountWrapper = styled.div`
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+`;
+const TranslateHandleWraper = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+`;
+/**Buttons and OnClickHandelers */
 const FirstButton = styled.div`
   height: 186px;
   width: 278px;
@@ -77,7 +134,6 @@ const FirstButton = styled.div`
   box-shadow: ${(props) =>
     props.clicked ? 'none' : `0px 100px 80px 0px rgba(0, 0, 0, 0.07)`};
 `;
-
 const SecondButton = styled.div`
   height: 186px;
   width: 278px;
@@ -119,27 +175,71 @@ const SecondButton = styled.div`
   box-shadow: ${(props) =>
     props.clicked ? `0px 100px 80px 0px rgba(0, 0, 0, 0.07)` : 'none'};
 `;
-const Wrapper = styled.div`
-  height: 110px;
-  width: 560px;
+const Donation = styled.button`
+  height: 53px;
+  min-width: 70px;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border-radius: 5px;
+  background: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  outline: none;
+  :focus {
+    background-image: ${(props) => props.theme.color.primary};
+    color: white;
+  }
+`;
+const ContinueBttn = styled.button`
+  height: 53px;
+  width: 116px;
+  background-image: ${(props) => props.theme.color.primary};
+  border: none;
+  border-radius: 100px;
+  color: white;
+  font-weight: 800;
+  font-size: 0.8rem;
+  outline: none;
+`;
+const TranslateBttn = styled.button`
+  height: 25px;
+  width: 50px;
+  background-image: ${(props) => props.theme.color.primary};
+  border: 1px solid black;
+  border-radius: 100px;
+  outline: none;
+  :focus {
+    outline: none;
+  }
+`;
+const ContinueBttnNotActive = styled(ContinueBttn)`
+  background-image: none;
+  background-color: ${(props) => props.theme.color.darkGrey};
+`;
+/**Form, Labels and Inputs */
+const Form = styled.form`
+  height: 350px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: space-between;
 `;
-const ButtonWrapper = styled.div`
-  height: 100px;
-  width: 550px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-`;
-const BoldText = styled.p`
+const Label = styled.label`
+  position: absolute;
+  margin-left: 15px;
   font-weight: bold;
 `;
-const BttnText = styled.div`
-  text-align: start;
-  font-weight: 600;
+const CustomDonation = styled.input`
+  height: 53px;
+  min-width: 70px;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  outline: none;
+  text-align: center;
+  :focus {
+    background-image: ${(props) => props.theme.color.primary};
+    color: white;
+  }
 `;
 const Input = styled.input`
   height: 65px;
@@ -149,6 +249,7 @@ const Input = styled.input`
   padding-left: 15px;
   padding-top: 15px;
 `;
+/**Dropdown Menu */
 const DropDownMenu = styled.div`
   display: ${(props) => (props.dropDownMenu ? 'none' : 'block')};
   position: absolute;
@@ -172,76 +273,20 @@ const DropDownItem = styled.div`
   font-weight: bold;
   border-bottom: 1px solid white;
 `;
-
-const DonationWrapper = styled.div`
-  display: flex;
-  width: 530px;
-  justify-content: space-between;
-`;
-const Donation = styled.button`
-  height: 53px;
-  min-width: 70px;
-  border: 1px solid ${(props) => props.theme.color.lightGrey};
-  border-radius: 5px;
-  background: white;
-  font-size: 1.1rem;
-  font-weight: bold;
-  outline: none;
-  :focus {
-    background-image: ${(props) => props.theme.color.primary};
-    color: white;
-  }
-`;
-const CustomDonation = styled.input`
-  height: 53px;
-  min-width: 70px;
-  border: 1px solid ${(props) => props.theme.color.lightGrey};
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  outline: none;
-  text-align: center;
-  :focus {
-    background-image: ${(props) => props.theme.color.primary};
-    color: white;
-  }
-`;
-const Form = styled.form`
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const Label = styled.label`
-  position: absolute;
-  margin-left: 15px;
-  font-weight: bold;
-`;
-const ContinueBttn = styled.button`
-  height: 53px;
-  width: 116px;
-  background-image: ${(props) => props.theme.color.primary};
-  border: none;
+/**PageCount */
+const PageCount = styled.div`
+  height: 8px;
+  width: 25px;
   border-radius: 100px;
-  color: white;
-  font-weight: 800;
-  font-size: 0.8rem;
-  outline: none;
-`;
-const ContinueBttnNotActive = styled(ContinueBttn)`
-  background-image: none;
-  background-color: ${(props) => props.theme.color.darkGrey};
-`;
-const IconWrapper = styled.div`
-  height: 80px;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: ${(props) => props.theme.color.darkerGrey};
-  border-radius: 50%;
 `;
+const PageCountActive = styled(PageCount)`
+  width: 50px;
+  background-image: ${(props) => props.theme.color.primary};
+`;
+/**Icons & Imgs */
 const Icon = styled.img``;
+
 const ChooseHelp = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [clicked, setClicked] = useState(true);
@@ -250,6 +295,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const [dropDownMenu, setDropDownMenu] = useState(true);
   const [required, setRequired] = useState('Nepovinné');
   const donation = [5, 10, 20, 30, 50, 100];
+  const { t, i118n } = useTranslation();
   /**Redux consts */
   const [helpValue, setHelpValue] = useState(
     'Chcem finančne prispieť celej nadácii',
@@ -257,7 +303,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const [shelterId, setShelderId] = useState();
   const [shelterValue, setShelterValue] = useState('');
   const [donationValue, setDonationValue] = useState();
-
+  /**FCE to handle DropDown Menu */
   const showDropDownMenu = () => {
     setDropDownMenu(!dropDownMenu);
   };
@@ -300,16 +346,28 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
       phoneNumber: '',
     });
   };
-  const { t, i118n } = useTranslation();
+  /**Language handeler */
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
-  console.log(donationValue);
   return (
     <>
-      <button onClick={() => changeLanguage('cz')}>CZ</button>
-      <button onClick={() => changeLanguage('sk')}>SK</button>
       <Section>
+        <AsideWrapper>
+          <PageCountWrapper>
+            <PageCountActive />
+            <PageCount />
+            <PageCount />
+          </PageCountWrapper>
+          <TranslateHandleWraper>
+            <TranslateBttn onClick={() => changeLanguage('cz')}>
+              CZ
+            </TranslateBttn>
+            <TranslateBttn onClick={() => changeLanguage('sk')}>
+              SK
+            </TranslateBttn>
+          </TranslateHandleWraper>
+        </AsideWrapper>
         <H1>{t('chooseHelp.title')}</H1>
 
         <ButtonsWrapper>

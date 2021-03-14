@@ -144,7 +144,43 @@ const BackBttn = styled.button`
 const BoldText = styled.p`
   font-weight: bold;
 `;
-
+const AsideWrapper = styled.div`
+  width: 570px;
+  height: 1px;
+  display: flex;
+  justify-content: space-between;
+`;
+const PageCount = styled.div`
+  height: 8px;
+  width: 25px;
+  border-radius: 100px;
+  background-color: ${(props) => props.theme.color.darkerGrey};
+`;
+const PageCountActive = styled(PageCount)`
+  width: 50px;
+  background-image: ${(props) => props.theme.color.primary};
+`;
+const PageCountWrapper = styled.div`
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+`;
+const TranslateHandleWraper = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+`;
+const TranslateBttn = styled.button`
+  height: 25px;
+  width: 50px;
+  background-image: ${(props) => props.theme.color.primary};
+  border: 1px solid black;
+  border-radius: 100px;
+  outline: none;
+  :focus {
+    outline: none;
+  }
+`;
 const Form = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [name, setName] = useState();
@@ -197,9 +233,22 @@ const Form = ({ setUserInfo, userInfo }) => {
   console.log(userInfo.userInfo.shelterID);
   return (
     <>
-      <button onClick={() => changeLanguage('cz')}>CZ</button>
-      <button onClick={() => changeLanguage('sk')}>SK</button>
       <Section>
+        <AsideWrapper>
+          <PageCountWrapper>
+            <PageCount />
+            <PageCountActive />
+            <PageCount />
+          </PageCountWrapper>
+          <TranslateHandleWraper>
+            <TranslateBttn onClick={() => changeLanguage('cz')}>
+              CZ
+            </TranslateBttn>
+            <TranslateBttn onClick={() => changeLanguage('sk')}>
+              SK
+            </TranslateBttn>
+          </TranslateHandleWraper>
+        </AsideWrapper>
         <H1>{t('form.title')}</H1>
         <Forms
           onChange={(e) => {}}
