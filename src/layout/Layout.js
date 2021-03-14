@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import styled from 'styled-components';
-import ChooseHelp from '../components/ChooseHelp';
-import Confirmation from '../components/Confirmation';
-import DogPicture from '../components/DogPicture';
-import Form from '../components/Form';
+import ChooseHelp from '../containers/ChooseHelp';
+import Confirmation from '../containers/Confirmation';
+import DogPicture from '../containers/DogPicture';
+import Form from '../containers/Form';
 import Footer from './Footer';
 import Navbar from './Navbar';
 

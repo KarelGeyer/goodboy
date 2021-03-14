@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 const Section = styled.section`
   height: 800px;
-  width: 800px;
+  width: 700px;
   align-self: center;
   display: flex;
   flex-direction: column;
@@ -21,12 +21,17 @@ const H1 = styled.h1`
   font-size: 49px;
   font-weight: 700;
   line-height: 52px;
-  text-align: justify;
+  text-align: start;
 `;
 const ButtonsWrapper = styled.div`
   height: 186px;
   width: 560px;
   display: flex;
+`;
+const TextWrapper = styled.div`
+  display: flex;
+  width: 550px;
+  justify-content: space-between;
 `;
 const FirstButton = styled.div`
   height: 186px;
@@ -120,16 +125,18 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
 `;
 const ButtonWrapper = styled.div`
+  height: 100px;
   width: 550px;
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
 `;
 const BoldText = styled.p`
   font-weight: bold;
 `;
 const BttnText = styled.div`
-  width: 175px;
-  text-align: justify;
+  text-align: start;
+  font-weight: 600;
 `;
 const Input = styled.input`
   height: 65px;
@@ -137,6 +144,7 @@ const Input = styled.input`
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 10px;
   padding-left: 15px;
+  padding-top: 15px;
 `;
 const DropDownMenu = styled.div`
   display: ${(props) => (props.dropDownMenu ? 'none' : 'block')};
@@ -186,7 +194,6 @@ const CustomDonation = styled.input`
   min-width: 70px;
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 5px;
-  background: white;
   font-size: 1.1rem;
   font-weight: bold;
   outline: none;
@@ -195,6 +202,17 @@ const CustomDonation = styled.input`
     background-image: ${(props) => props.theme.color.primary};
     color: white;
   }
+`;
+const Form = styled.form`
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+const Label = styled.label`
+  position: absolute;
+  margin-left: 15px;
+  font-weight: bold;
 `;
 const ContinueBttn = styled.button`
   height: 53px;
@@ -228,7 +246,8 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const [shelters, setShelters] = useState('');
   const [submit, setSubmit] = useState('');
   const [dropDownMenu, setDropDownMenu] = useState(true);
-
+  const [required, setRequired] = useState('Nepovinné');
+  const donation = [5, 10, 20, 30, 50, 100];
   /**Redux consts */
   const [helpValue, setHelpValue] = useState(
     'Chcem finančne prispieť celej nadácii',
@@ -244,6 +263,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const chooseHelp = (e) => {
     setClicked(!clicked);
     setHelpValue(e.target.innerText);
+    setRequired(clicked === false ? 'Nepovinné' : 'Povinné');
   };
   /**Store a chosen shelter */
   const storeValueOnChange = (e) => {
@@ -252,9 +272,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
 
   /**Store a chosen donation value */
   const storeDonationValueOnClick = (e) => {
-    e.target.innerText === ''
-      ? setDonationValue(e.target.value)
-      : setDonationValue(e.target.innerText);
+    setDonationValue(e.target.value);
   };
   /**GET response from API */
   useEffect(() => {
@@ -280,7 +298,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
       phoneNumber: '',
     });
   };
-  console.log(shelterValue);
+  console.log(donationValue);
   return (
     <>
       <Section>
@@ -299,15 +317,19 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             <BttnText>Chcem finančne prispieť celej nadácii</BttnText>
           </SecondButton>
         </ButtonsWrapper>
-        <form
+        <Form
           onSubmit={(e) => {
-            console.log(e);
             setSubmit(e);
             e.preventDefault();
           }}
         >
           <Wrapper>
-            <BoldText>Najviac mi záleží na útulku</BoldText>
+            <TextWrapper>
+              <BoldText>Najviac mi záleží na útulku</BoldText>
+              <BoldText>{required}</BoldText>
+            </TextWrapper>
+
+            <Label>Útulok</Label>
             {helpValue === 'Chcem finančne prispieť celej nadácii' ? (
               <Input
                 onClick={showDropDownMenu}
@@ -347,30 +369,25 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
                 <option>seznam sa načítá...</option>
               )}
             </DropDownMenu>
-            {/* <datalist id="shelters">
-              {!!shelters ? (
-                shelters.map((shelter) => {
-                  return <option key={shelter.id}>{shelter.name}</option>;
-                })
-              ) : (
-                <option>seznam sa načítá...</option>
-              )}
-            </datalist> */}
           </Wrapper>
           <Wrapper>
             <BoldText>Suma, ktorou chcem prispieť</BoldText>
             <DonationWrapper>
-              <Donation onClick={storeDonationValueOnClick}>5</Donation>
-              <Donation onClick={storeDonationValueOnClick}>10</Donation>
-              <Donation onClick={storeDonationValueOnClick}>20</Donation>
-              <Donation onClick={storeDonationValueOnClick}>30</Donation>
-              <Donation onClick={storeDonationValueOnClick}>50</Donation>
-              <Donation onClick={storeDonationValueOnClick}>100</Donation>
+              {donation.map((val) => {
+                return (
+                  <Donation
+                    onClick={() => {
+                      setDonationValue(val);
+                    }}
+                  >
+                    {val} &euro;
+                  </Donation>
+                );
+              })}
               <CustomDonation
                 onChange={storeDonationValueOnClick}
-                onClick={showDropDownMenu}
                 type="text"
-                placeholder="...."
+                placeholder=".... &euro;"
               ></CustomDonation>
             </DonationWrapper>
           </Wrapper>
@@ -387,7 +404,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
               </Link>
             )}
           </ButtonWrapper>
-        </form>
+        </Form>
       </Section>
     </>
   );

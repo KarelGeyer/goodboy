@@ -8,7 +8,7 @@ import checker from '../assets/checker.jpg';
 
 const Section = styled.section`
   height: 800px;
-  width: 800px;
+  width: 700px;
   align-self: center;
   display: flex;
   flex-direction: column;
@@ -22,14 +22,21 @@ const H1 = styled.h1`
   line-height: 52px;
   text-align: start;
 `;
+const H2 = styled.h2`
+  width: 570px;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 52px;
+  text-align: start;
+`;
 const FormWrapper = styled.div`
-  height: 380px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 const TextWrapper = styled.div`
-  width: 570px;
+  width: 500px;
   height: 60px;
   text-align: start;
 `;
@@ -42,14 +49,20 @@ const Text = styled.p`
   font-weight: 500;
 `;
 const CheckerWrapper = styled.div`
-  width: 570px;
+  height: 60px;
+  width: 500px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+`;
+const Form = styled.form`
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const Checker = styled.input`
   height: 30px;
   width: 30px;
-  border: 1px solid white;
   border-radius: 25px;
   align-self: start;
   margin-right: 15px;
@@ -66,13 +79,13 @@ const Checker = styled.input`
   }
 `;
 const ButtonWrapper = styled.div`
-  width: 550px;
+  width: 500px;
   display: flex;
   justify-content: space-between;
 `;
 const ContinueBttn = styled.button`
   height: 53px;
-  width: 116px;
+  width: 150px;
   background-color: ${(props) =>
     props.active ? props.theme.color.darkGrey : 'none'};
   background-image: ${(props) =>
@@ -96,6 +109,33 @@ const BackBttn = styled.button`
   font-size: 0.8rem;
   outline: none;
 `;
+const ConfirmationMsg = styled.div`
+  position: absolute;
+  height: 300px;
+  width: 600px;
+  background-color: ${(props) => props.theme.color.terciary};
+  padding: 25px;
+  padding-top: 0px;
+  border: 5px solid ${(props) => props.theme.color.borderActive};
+  border-radius: 25px;
+  display: ${(props) => (props.succes ? 'flex' : 'none')};
+  justify-content: space-evenly;
+  flex-direction: column;
+`;
+const ErrorMsg = styled.div`
+  position: absolute;
+  height: 300px;
+  width: 600px;
+  background-color: ${(props) => props.theme.color.terciary};
+  padding: 25px;
+  padding-top: 0px;
+  border: 2px solid ${(props) => props.theme.color.borderActive};
+  border-radius: 25px;
+  display: ${(props) => (props.error ? 'flex' : 'none')};
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+`;
 
 const Confirmation = ({ setUserInfo, userInfo }) => {
   /**Initial Consts */
@@ -107,14 +147,19 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
   const userSurname = userInfo.surname;
   const email = userInfo.email;
   const phoneNumber = userInfo.phoneNumber;
+  const shelterId = userInfo.shelterID;
   const [checked, setChecked] = useState(false);
   const [active, setActive] = useState(true);
+  const [succes, setSucces] = useState(false);
+  const [error, setError] = useState(false);
 
   const CheckHandeler = () => {
     setChecked(!checked);
     setActive(!active);
   };
-
+  const closeMessage = () => {
+    setError(false);
+  };
   /**POST data in API */
   const confirmInfo = () => {
     axios
@@ -126,22 +171,24 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
           email: email,
           value: donationValue,
           phone: phoneNumber,
-          shelterIDoptional: 1,
+          shelterIDoptional: shelterId,
         },
       )
       .then((res) => {
         console.log(res);
+        setSucces(true);
       })
       .catch((err) => {
         console.log(err);
+        setError(true);
       });
   };
-  console.log(userInfo.shelterID);
+  console.log(userInfo);
   return (
     <>
       <Section>
         <H1>Skontrolujte si zadané údaje</H1>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={(e) => e.preventDefault()}>
           <FormWrapper>
             <TextWrapper>
               <BoldText>Akou formou chcem pomocť</BoldText>
@@ -176,18 +223,39 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
               required
               checked={checked}
               onClick={CheckHandeler}
+              readOnly
             ></Checker>
-            <p>Súhlasím so spracování mojich osobných údajou</p>
+            <p>Súhlasím so spracováním mojich osobných údajou</p>
           </CheckerWrapper>
           <ButtonWrapper>
             <Link to="form">
               <BackBttn>Spať</BackBttn>
             </Link>
-            <ContinueBttn type="submit" onClick={confirmInfo} active={active}>
-              Potvrdit
-            </ContinueBttn>
+            {checked === false ? (
+              <ContinueBttn type="submit" active={active}>
+                Odeslať Formulár
+              </ContinueBttn>
+            ) : (
+              <ContinueBttn type="submit" onClick={confirmInfo} active={active}>
+                Odeslať Formulár
+              </ContinueBttn>
+            )}
           </ButtonWrapper>
-        </form>
+        </Form>
+        <ConfirmationMsg succes={succes}>
+          <H1>Vše proběhlo v pořádku, Děkujeme!</H1>
+          <Link to="/">
+            <ContinueBttn>Zpět na úvodní stránku</ContinueBttn>
+          </Link>
+        </ConfirmationMsg>
+        <ErrorMsg error={error}>
+          <H1>Něco se porouchalo</H1>
+          <H2>
+            Prosím, zkontrolujte zda máte všechna data správně a ve správném
+            formátu, děkujeme
+          </H2>
+          <ContinueBttn onClick={closeMessage}>Zavřít</ContinueBttn>
+        </ErrorMsg>
       </Section>
     </>
   );

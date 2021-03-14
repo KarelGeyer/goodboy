@@ -7,12 +7,12 @@ import CzIcon from '../assets/czech.png';
 import SkIcon from '../assets/slovakia.png';
 
 const Section = styled.section`
-  height: 800px;
-  width: 800px;
+  height: 650px;
+  width: 700px;
   align-self: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 `;
 const H1 = styled.h1`
@@ -23,15 +23,31 @@ const H1 = styled.h1`
   text-align: start;
 `;
 const Input = styled.input`
-  height: 65px;
+  height: 70px;
   width: 550px;
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 7px;
   padding-left: 15px;
+  padding-top: 15px;
   outline: none;
   :focus {
     border: 2px solid ${(props) => props.theme.color.borderActive};
   }
+`;
+const LabelForMeno = styled.label`
+  position: absolute;
+  margin-left: 15px;
+  margin-top: 50px;
+  font-weight: bold;
+`;
+const LabelForPriezvisko = styled(LabelForMeno)`
+  margin-top: 140px;
+`;
+const LabelForEmail = styled(LabelForMeno)`
+  margin-top: 230px;
+`;
+const LabelForPhone = styled(LabelForMeno)`
+  margin-top: 320px;
 `;
 const PhoneNumWrapper = styled.div`
   height: 65px;
@@ -41,33 +57,35 @@ const PhoneNumWrapper = styled.div`
 const PhoneNumCountry = styled.div`
   height: 65px;
   width: 100px;
-  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border: ${(props) =>
+    props.focus
+      ? `1px solid ${props.theme.color.lightGrey}`
+      : `2px solid ${props.theme.color.borderActive}`};
   border-right: none;
   border-radius: 7px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  padding-left: 15px;
+  padding-left: 5px;
+  padding-top: 15px;
   outline: none;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  :focus {
-    border: 2px solid ${(props) => props.theme.color.borderActive};
-  }
 `;
 const PhoneNumType = styled.input`
   height: 65px;
   width: 450px;
-  border: 1px solid ${(props) => props.theme.color.lightGrey};
+  border: ${(props) =>
+    props.focus
+      ? `1px solid ${props.theme.color.lightGrey}`
+      : `2px solid ${props.theme.color.borderActive}`};
   border-left: none;
   border-radius: 7px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   padding-left: 15px;
+  padding-top: 15px;
   outline: none;
-  :focus {
-    border: 2px solid ${(props) => props.theme.color.borderActive};
-  }
 `;
 const FlagIcon = styled.img`
   height: 30px;
@@ -76,19 +94,21 @@ const FlagIcon = styled.img`
 `;
 
 const FormWrapper = styled.div`
-  height: 350px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 const ButtonWrapper = styled.div`
   width: 550px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 const ContinueBttn = styled.button`
   height: 53px;
-  width: 116px;
+  width: 126px;
   background-image: ${(props) => props.theme.color.primary};
   border: none;
   border-radius: 100px;
@@ -100,6 +120,12 @@ const ContinueBttn = styled.button`
 const ContinueBttnNotActive = styled(ContinueBttn)`
   background-image: none;
   background-color: ${(props) => props.theme.color.darkGrey};
+`;
+const Forms = styled.form`
+  height: 490px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const BackBttn = styled.button`
   height: 53px;
@@ -123,14 +149,21 @@ const Form = ({ setUserInfo, userInfo }) => {
   const [email, setEmail] = useState();
   const [submit, setSubmit] = useState('');
   const [phoneNumber, setPhoneNumber] = useState();
-  const [srcHandeler, setSrcHandeler] = useState(true);
+  const [srcHandeler, setSrcHandeler] = useState(false);
   const [countryFlag, setCountryFlag] = useState(SkIcon);
   const [countryNum, setCountryNum] = useState('+421');
+  const [focus, setFocus] = useState(true);
   const donationValue = userInfo.userInfo.donationValue;
   const helpValue = userInfo.userInfo.helpValue;
   const shelterValue = userInfo.userInfo.shelterValue;
   const shelterId = userInfo.userInfo.shelterID;
   console.log(userInfo);
+  const settingFocus = () => {
+    setFocus(false);
+  };
+  const settingFocusBack = () => {
+    setFocus(true);
+  };
   const changeCountry = () => {
     setSrcHandeler(!srcHandeler);
     if (srcHandeler === true) {
@@ -159,7 +192,7 @@ const Form = ({ setUserInfo, userInfo }) => {
     <>
       <Section>
         <H1>Potrebujeme od Vás zopár informácií</H1>
-        <form
+        <Forms
           onChange={(e) => {}}
           onSubmit={(e) => {
             setSubmit(e);
@@ -168,6 +201,7 @@ const Form = ({ setUserInfo, userInfo }) => {
         >
           <FormWrapper>
             <BoldText>O vás</BoldText>
+            <LabelForMeno>Meno</LabelForMeno>
             <Input
               placeholder="Zadejte Vaše meno"
               pattern="[A-Za-z]{2,20}"
@@ -175,25 +209,32 @@ const Form = ({ setUserInfo, userInfo }) => {
               onChange={(e) => {
                 setName(e.target.value);
               }}
+              onClick={settingFocusBack}
             ></Input>
+            <LabelForPriezvisko>Prizvisko</LabelForPriezvisko>
             <Input
               required
-              pattern="[A-Za-z]{2,30}"
+              pattern="[A-Za-zřťščďžňŘŤŠĎŽČŇéúíóáýÉÚÍÓÁÝůŮ]{2,30}"
               title="Příjmení musí obsahovat 2 až 30 znaků, zadejte prosím Vaše příjmení v platném formátu"
               placeholder="Zadejte Vaše priezvisko"
               onChange={(e) => {
                 setSurname(e.target.value);
               }}
+              onClick={settingFocusBack}
             ></Input>
+            <LabelForEmail>E-mailová adresa</LabelForEmail>
+
             <Input
               type="email"
               placeholder="Zadejte Vás e-mail"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              onClick={settingFocusBack}
             ></Input>
+            <LabelForPhone>Telefónne číslo</LabelForPhone>
             <PhoneNumWrapper>
-              <PhoneNumCountry type="text">
+              <PhoneNumCountry onClick={settingFocus} focus={focus} type="text">
                 <FlagIcon
                   src={countryFlag}
                   alt=""
@@ -202,8 +243,10 @@ const Form = ({ setUserInfo, userInfo }) => {
                 <BoldText>{countryNum}</BoldText>
               </PhoneNumCountry>
               <PhoneNumType
+                focus={focus}
                 type="tel"
                 pattern="[0-9]{9}"
+                onClick={settingFocus}
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
                 }}
@@ -215,7 +258,7 @@ const Form = ({ setUserInfo, userInfo }) => {
               <BackBttn>Spať</BackBttn>
             </Link>
             {submit === '' || submit === undefined ? (
-              <ContinueBttnNotActive type="submit">
+              <ContinueBttnNotActive type="submit" onClick={settingFocusBack}>
                 Potvrdit
               </ContinueBttnNotActive>
             ) : (
@@ -224,6 +267,7 @@ const Form = ({ setUserInfo, userInfo }) => {
                   type="submit"
                   onClick={() => {
                     storeData();
+                    settingFocusBack();
                   }}
                 >
                   Pokračovať
@@ -231,7 +275,7 @@ const Form = ({ setUserInfo, userInfo }) => {
               </Link>
             )}
           </ButtonWrapper>
-        </form>
+        </Forms>
       </Section>
     </>
   );
