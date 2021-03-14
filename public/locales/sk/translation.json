@@ -1,0 +1,46 @@
+{
+  "chooseHelp": {
+    "title": "Vyberte si možnosť, ako chcete pomôcť",
+    "howToHelp": {
+      "firstBttn": "Chcem finančne prispieť konkrétnemu útulku",
+      "secondBttn": "Chcem finančne prispieť celej nadácii"
+    },
+    "chooseShelter": "Najviac mi záleží na útulku:",
+    "shelter": "Útulok",
+    "chooseShelterDrpdwn": "Vyberte útulok ze seznamu",
+    "donation": "Suma, ktorou chcem prispieť",
+
+    "button": "pokračovať"
+  },
+  "form": {
+    "title": "Potrebujeme od Vás zopár informácií",
+    "name": "Meno",
+    "addName": "Zadejte Vaše meno",
+    "surname": "Prizvisko",
+    "addSurname": "Zadejte Vaše prizvisko",
+    "phone": "Telefónne číslo",
+    "backBttn": "Spať",
+    "confirm": "Potvrdiť",
+    "next": "Pokračovať",
+    "inputTitles": {
+      "first": "Meno musí obsahovať 2 až 20 znakov, zadajte prosím Vaše meno v platnom formáte",
+      "second": "Priezvisko musí obsahovať 2 až 30 znakov, zadajte prosím Vaše priezvisko v platnom formáte"
+    }
+  },
+  "confirm": {
+    "title": "Skontrolujte si zadané údaje",
+    "howToHelp": "Akou formou chcem pomocť",
+    "chooseShelter": "Najviac mi záleží na útulku:",
+    "donation": "Suma, ktorou chcem prispieť",
+    "nameAndSurname": "Meno a priezvisko",
+    "phone": "Telefónne číslo",
+    "backBttn": "Spať",
+    "GDPR": "Súhlasím so spracováním mojich osobných údajou",
+    "send": "Odeslať Formulár",
+    "confirmMsg": "Všetko prebehlo v poriadku, Ďakujeme!",
+    "confirmMsgBttn": "Späť na úvodnú stránku",
+    "errorMsgH1": "Niečo sa pokazilo",
+    "errorMsgH2": "Prosím, skontrolujte či máte všetky dáta správne a v správnom formáte, ďakujeme",
+    "close": "Zavrieť"
+  }
+}

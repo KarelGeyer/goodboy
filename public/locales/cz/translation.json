@@ -1,0 +1,45 @@
+{
+  "chooseHelp": {
+    "title": "Vyberte si možnost, jak chcete pomoci",
+    "howToHelp": {
+      "firstBttn": "Chtěl bych finančně přispět konkrétnímu útulku",
+      "secondBttn": "Chtěl bych  finančně přispět celé nadaci"
+    },
+    "chooseShelter": "Nejvíce mi záleží na útulku:",
+    "shelter": "Útulek",
+    "chooseShelterDrpdwn": "Vyberte útulek ze seznamu",
+    "donation": "Suma, kterou bych chtěl přispět",
+    "button": "pokračovat"
+  },
+  "form": {
+    "title": "Potřebujeme od Vás pár informací",
+    "name": "Jméno",
+    "addName": "Zadejte Vaše jméno",
+    "surname": "Příjmení",
+    "addSurname": "Zadejte Vaše příjmení",
+    "phone": "Telefonní číslo",
+    "backBttn": "Zpět",
+    "confirm": "Potvrdit",
+    "next": "Pokračovat",
+    "inputTitles": {
+      "first": "Jméno musí obsahovat 2 až 20 znaků, zadejte prosím Vaše jméno v platném formátu",
+      "second": "Příjmení musí obsahovat 2 až 30 znaků, zadejte prosím Vaše příjmení v platném formátu"
+    }
+  },
+  "confirm": {
+    "title": "Zkontrolujte si zadané údaje",
+    "howToHelp": "Jakou formou chci pomoci",
+    "chooseShelter": "Nejvíc mi záleží na útulku",
+    "donation": "Suma, kterou chci přispět",
+    "nameAndSurname": "Jméno a příjmení",
+    "phone": "Telefonní číslo",
+    "backBttn": "Zpět",
+    "GDPR": "Souhlasím se zpracováním osobních údajů",
+    "send": "Odeslat Formulář",
+    "confirmMsg": "Všechno proběhlo v pořádku, děkujeme!",
+    "confirmMsgBttn": "Zpět na úvodní stránku",
+    "errorMsgH1": "Něco se pokazilo",
+    "errorMsgH2": "Prosím, zkontrolujte zda máte všechna data správně a ve správném formátu, děkujeme",
+    "close": "Zavřít"
+  }
+}

@@ -5,6 +5,9 @@ import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import checker from '../assets/checker.jpg';
+import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 
 const Section = styled.section`
   height: 800px;
@@ -183,27 +186,33 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
         setError(true);
       });
   };
+  const { t, i118n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   console.log(userInfo);
   return (
     <>
+      <button onClick={() => changeLanguage('cz')}>CZ</button>
+      <button onClick={() => changeLanguage('sk')}>SK</button>
       <Section>
-        <H1>Skontrolujte si zadané údaje</H1>
+        <H1>{t('confirm.title')}</H1>
         <Form onSubmit={(e) => e.preventDefault()}>
           <FormWrapper>
             <TextWrapper>
-              <BoldText>Akou formou chcem pomocť</BoldText>
+              <BoldText>{t('confirm.howToHelp')}</BoldText>
               <Text>{helpValue}</Text>
             </TextWrapper>
             <TextWrapper>
-              <BoldText>Najviac mi záleží na útulku</BoldText>
+              <BoldText>{t('confirm.chooseShelter')}</BoldText>
               <Text>{shelterValue}</Text>
             </TextWrapper>
             <TextWrapper>
-              <BoldText>Suma, ktorou chcem pomocť</BoldText>
+              <BoldText>{t('confirm.donation')}</BoldText>
               <Text>{donationValue}</Text>
             </TextWrapper>
             <TextWrapper>
-              <BoldText>Meno a priezvisko</BoldText>
+              <BoldText>{t('confirm.nameAndSurname')}</BoldText>
               <Text>
                 {userName} {userSurname}
               </Text>
@@ -213,7 +222,7 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
               <Text>{email}</Text>
             </TextWrapper>
             <TextWrapper>
-              <BoldText>Telefónne číslo</BoldText>
+              <BoldText>{t('confirm.phone')}</BoldText>
               <Text>{phoneNumber}</Text>
             </TextWrapper>
           </FormWrapper>
@@ -225,36 +234,35 @@ const Confirmation = ({ setUserInfo, userInfo }) => {
               onClick={CheckHandeler}
               readOnly
             ></Checker>
-            <p>Súhlasím so spracováním mojich osobných údajou</p>
+            <p>{t('confirm.GDPR')}</p>
           </CheckerWrapper>
           <ButtonWrapper>
             <Link to="form">
-              <BackBttn>Spať</BackBttn>
+              <BackBttn>{t('confirm.backBttn')}</BackBttn>
             </Link>
             {checked === false ? (
               <ContinueBttn type="submit" active={active}>
-                Odeslať Formulár
+                {t('confirm.send')}
               </ContinueBttn>
             ) : (
               <ContinueBttn type="submit" onClick={confirmInfo} active={active}>
-                Odeslať Formulár
+                {t('confirm.send')}
               </ContinueBttn>
             )}
           </ButtonWrapper>
         </Form>
         <ConfirmationMsg succes={succes}>
-          <H1>Vše proběhlo v pořádku, Děkujeme!</H1>
+          <H1>{t('confirm.confirmMsg')}</H1>
           <Link to="/">
-            <ContinueBttn>Zpět na úvodní stránku</ContinueBttn>
+            <ContinueBttn>{t('confirm.confirmMsgBttn')}</ContinueBttn>
           </Link>
         </ConfirmationMsg>
         <ErrorMsg error={error}>
-          <H1>Něco se porouchalo</H1>
-          <H2>
-            Prosím, zkontrolujte zda máte všechna data správně a ve správném
-            formátu, děkujeme
-          </H2>
-          <ContinueBttn onClick={closeMessage}>Zavřít</ContinueBttn>
+          <H1>{t('confirm.errorMsgH1')}</H1>
+          <H2>{t('confirm.errorMsgH2')}</H2>
+          <ContinueBttn onClick={closeMessage}>
+            {t('confirm.close')}
+          </ContinueBttn>
         </ErrorMsg>
       </Section>
     </>

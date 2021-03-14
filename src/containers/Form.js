@@ -5,6 +5,9 @@ import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
 import CzIcon from '../assets/czech.png';
 import SkIcon from '../assets/slovakia.png';
+import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 
 const Section = styled.section`
   height: 650px;
@@ -187,11 +190,17 @@ const Form = ({ setUserInfo, userInfo }) => {
       phoneNumber: phoneNumber,
     });
   };
+  const { t, i118n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   console.log(userInfo.userInfo.shelterID);
   return (
     <>
+      <button onClick={() => changeLanguage('cz')}>CZ</button>
+      <button onClick={() => changeLanguage('sk')}>SK</button>
       <Section>
-        <H1>Potrebujeme od Vás zopár informácií</H1>
+        <H1>{t('form.title')}</H1>
         <Forms
           onChange={(e) => {}}
           onSubmit={(e) => {
@@ -201,22 +210,22 @@ const Form = ({ setUserInfo, userInfo }) => {
         >
           <FormWrapper>
             <BoldText>O vás</BoldText>
-            <LabelForMeno>Meno</LabelForMeno>
+            <LabelForMeno>{t('form.name')}</LabelForMeno>
             <Input
-              placeholder="Zadejte Vaše meno"
+              placeholder={t('form.addName')}
               pattern="[A-Za-z]{2,20}"
-              title="Jméno musí obsahovat 2 až 20 znaků, zadejte prosím Vaše jméno v platném formátu"
+              title={t('form.inputTitles.first')}
               onChange={(e) => {
                 setName(e.target.value);
               }}
               onClick={settingFocusBack}
             ></Input>
-            <LabelForPriezvisko>Prizvisko</LabelForPriezvisko>
+            <LabelForPriezvisko>{t('form.surname')}</LabelForPriezvisko>
             <Input
               required
               pattern="[A-Za-zřťščďžňŘŤŠĎŽČŇéúíóáýÉÚÍÓÁÝůŮ]{2,30}"
-              title="Příjmení musí obsahovat 2 až 30 znaků, zadejte prosím Vaše příjmení v platném formátu"
-              placeholder="Zadejte Vaše priezvisko"
+              title={t('form.inputTitles.second')}
+              placeholder={t('form.addSurname')}
               onChange={(e) => {
                 setSurname(e.target.value);
               }}
@@ -226,13 +235,13 @@ const Form = ({ setUserInfo, userInfo }) => {
 
             <Input
               type="email"
-              placeholder="Zadejte Vás e-mail"
+              placeholder="Zadejte Váš e-mail"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
               onClick={settingFocusBack}
             ></Input>
-            <LabelForPhone>Telefónne číslo</LabelForPhone>
+            <LabelForPhone>{t('form.phone')}</LabelForPhone>
             <PhoneNumWrapper>
               <PhoneNumCountry onClick={settingFocus} focus={focus} type="text">
                 <FlagIcon
@@ -255,11 +264,11 @@ const Form = ({ setUserInfo, userInfo }) => {
           </FormWrapper>
           <ButtonWrapper>
             <Link to="/">
-              <BackBttn>Spať</BackBttn>
+              <BackBttn>{t('form.backBttn')}</BackBttn>
             </Link>
             {submit === '' || submit === undefined ? (
               <ContinueBttnNotActive type="submit" onClick={settingFocusBack}>
-                Potvrdit
+                {t('form.confirm')}
               </ContinueBttnNotActive>
             ) : (
               <Link to="confirm">
@@ -270,7 +279,7 @@ const Form = ({ setUserInfo, userInfo }) => {
                     settingFocusBack();
                   }}
                 >
-                  Pokračovať
+                  {t('form.next')}
                 </ContinueBttn>
               </Link>
             )}

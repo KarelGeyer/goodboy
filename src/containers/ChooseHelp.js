@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
+import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 
 const Section = styled.section`
   height: 800px;
@@ -239,7 +242,6 @@ const IconWrapper = styled.div`
   border-radius: 50%;
 `;
 const Icon = styled.img``;
-
 const ChooseHelp = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [clicked, setClicked] = useState(true);
@@ -298,23 +300,30 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
       phoneNumber: '',
     });
   };
+  const { t, i118n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   console.log(donationValue);
   return (
     <>
+      <button onClick={() => changeLanguage('cz')}>CZ</button>
+      <button onClick={() => changeLanguage('sk')}>SK</button>
       <Section>
-        <H1>Vyberte si možnosť, ako chcete pomôcť</H1>
+        <H1>{t('chooseHelp.title')}</H1>
+
         <ButtonsWrapper>
           <FirstButton onClick={chooseHelp} clicked={clicked}>
             <IconWrapper>
               <Icon src={wallet}></Icon>
             </IconWrapper>
-            <BttnText>Chcem finančne prispieť konkrétnemu útulku</BttnText>
+            <BttnText>{t('chooseHelp.howToHelp.firstBttn')}</BttnText>
           </FirstButton>
           <SecondButton onClick={chooseHelp} clicked={clicked}>
             <IconWrapper>
               <Icon src={paw}></Icon>
             </IconWrapper>
-            <BttnText>Chcem finančne prispieť celej nadácii</BttnText>
+            <BttnText>{t('chooseHelp.howToHelp.secondBttn')}</BttnText>
           </SecondButton>
         </ButtonsWrapper>
         <Form
@@ -325,16 +334,17 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
         >
           <Wrapper>
             <TextWrapper>
-              <BoldText>Najviac mi záleží na útulku</BoldText>
+              <BoldText>{t('chooseHelp.chooseShelter')}</BoldText>
               <BoldText>{required}</BoldText>
             </TextWrapper>
 
-            <Label>Útulok</Label>
-            {helpValue === 'Chcem finančne prispieť celej nadácii' ? (
+            <Label>{t('chooseHelp.shelter')}</Label>
+            {helpValue === 'Chcem finančne prispieť celej nadácii' ||
+            helpValue === 'Chtěl bych  finančně přispět celé nadaci' ? (
               <Input
                 onClick={showDropDownMenu}
                 type="text"
-                placeholder="Vyberte útulok zo zoznamu"
+                placeholder={t('chooseHelp.chooseShelterDrpdwn')}
                 list="shelters"
                 onChange={storeValueOnChange}
                 value={shelterValue}
@@ -342,7 +352,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             ) : (
               <Input
                 onClick={showDropDownMenu}
-                placeholder="Vyberte útulok zo zoznamu"
+                placeholder={t('chooseHelp.chooseShelterDrpdwn')}
                 list="shelters"
                 onChange={storeValueOnChange}
                 required
@@ -371,7 +381,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             </DropDownMenu>
           </Wrapper>
           <Wrapper>
-            <BoldText>Suma, ktorou chcem prispieť</BoldText>
+            <BoldText>{t('chooseHelp.donation')}</BoldText>
             <DonationWrapper>
               {donation.map((val) => {
                 return (
@@ -394,12 +404,12 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
           <ButtonWrapper>
             {submit === '' || submit === undefined || donationValue < 1 ? (
               <ContinueBttnNotActive type="submit">
-                Pokračovať
+                {t('chooseHelp.button')}
               </ContinueBttnNotActive>
             ) : (
               <Link to="/form">
                 <ContinueBttn type="submit" onClick={storeDataOnConfirmation}>
-                  Pokračovať
+                  {t('chooseHelp.button')}
                 </ContinueBttn>
               </Link>
             )}
