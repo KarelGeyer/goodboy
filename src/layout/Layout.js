@@ -17,8 +17,10 @@ const Wrapper = styled.div`
   height: 950px;
   display: flex;
   max-width: 1200px;
-  border: 1px solid black;
   justify-content: flex-end;
+  @media (max-width: 500px) {
+    height: 800px;
+  }
 `;
 
 const layout = () => {

@@ -5,9 +5,11 @@ import DogImg from '../assets/dog.png';
 const DogSection = styled.section`
   height: 950px;
   width: 400px;
-  border: 1px solid black;
   display: flex;
   align-items: center;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 const Img = styled.img``;
 

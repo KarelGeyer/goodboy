@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
-import { Trans } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 
@@ -20,6 +19,12 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  @media (max-width: 700px) {
+    width: 500px;
+  }
+  @media (max-width: 500px) {
+    width: 400px;
+  }
 `;
 /**Fonts */
 const H1 = styled.h1`
@@ -28,6 +33,14 @@ const H1 = styled.h1`
   font-weight: 700;
   line-height: 52px;
   text-align: start;
+  @media (max-width: 700px) {
+    font-size: 35px;
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    font-size: 35px;
+    width: 350px;
+  }
 `;
 const BoldText = styled.p`
   font-weight: bold;
@@ -41,16 +54,29 @@ const ButtonsWrapper = styled.div`
   height: 186px;
   width: 560px;
   display: flex;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    width: 380px;
+  }
 `;
 const AsideWrapper = styled.div`
   width: 570px;
   height: 1px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    font-size: 35px;
+    width: 350px;
+  }
 `;
 const TextWrapper = styled.div`
   display: flex;
-  width: 550px;
+  width: 100%;
   justify-content: space-between;
 `;
 const ButtonWrapper = styled.div`
@@ -59,6 +85,10 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  @media (max-width: 700px) {
+    width: 450px;
+    justify-content: center;
+  }
 `;
 const Wrapper = styled.div`
   height: 110px;
@@ -67,11 +97,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+  }
 `;
 const DonationWrapper = styled.div`
   display: flex;
   width: 530px;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+  }
 `;
 const IconWrapper = styled.div`
   height: 80px;
@@ -79,7 +121,7 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.color.darkerGrey};
+  background-color: ${(props) => props.theme.color.lighterGrey};
   border-radius: 50%;
 `;
 const PageCountWrapper = styled.div`
@@ -95,7 +137,7 @@ const TranslateHandleWraper = styled.div`
 /**Buttons and OnClickHandelers */
 const FirstButton = styled.div`
   height: 186px;
-  width: 278px;
+  width: 50%;
   border: 1px solid ${(props) => props.theme.color.borderActive};
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
@@ -104,6 +146,7 @@ const FirstButton = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  cursor: pointer;
   padding-left: 25px;
   color: ${(props) => (props.clicked ? 'black' : 'white')};
   ${(props) =>
@@ -136,7 +179,7 @@ const FirstButton = styled.div`
 `;
 const SecondButton = styled.div`
   height: 186px;
-  width: 278px;
+  width: 50%;
   border: 1px solid ${(props) => props.theme.color.borderActive};
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
@@ -144,6 +187,7 @@ const SecondButton = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   padding-left: 25px;
+  cursor: pointer;
   color: ${(props) => (props.clicked ? 'white' : 'black')};
   background-image: ${(props) =>
     props.clicked ? props.theme.color.primary : 'none'};
@@ -177,16 +221,20 @@ const SecondButton = styled.div`
 `;
 const Donation = styled.button`
   height: 53px;
-  min-width: 70px;
+  min-width: 14%;
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 5px;
   background: white;
   font-size: 1.1rem;
   font-weight: bold;
   outline: none;
+  cursor: pointer;
   :focus {
     background-image: ${(props) => props.theme.color.primary};
     color: white;
+  }
+  @media (max-width: 500px) {
+    font-size: 0.9rem;
   }
 `;
 const ContinueBttn = styled.button`
@@ -199,14 +247,15 @@ const ContinueBttn = styled.button`
   font-weight: 800;
   font-size: 0.8rem;
   outline: none;
+  cursor: pointer;
 `;
 const TranslateBttn = styled.button`
   height: 25px;
   width: 50px;
   background-image: ${(props) => props.theme.color.primary};
-  border: 1px solid black;
   border-radius: 100px;
   outline: none;
+  cursor: pointer;
   :focus {
     outline: none;
   }
@@ -221,6 +270,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 500px;
+    align-items: center;
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+  }
 `;
 const Label = styled.label`
   position: absolute;
@@ -236,18 +292,24 @@ const CustomDonation = styled.input`
   font-weight: bold;
   outline: none;
   text-align: center;
+  cursor: pointer;
   :focus {
     background-image: ${(props) => props.theme.color.primary};
     color: white;
   }
+  @media (max-width: 500px) {
+    font-size: 0.9rem;
+  }
 `;
 const Input = styled.input`
   height: 65px;
-  width: 550px;
+  width: 100%;
   border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 10px;
   padding-left: 15px;
   padding-top: 15px;
+  outline: none;
+  cursor: pointer;
 `;
 /**Dropdown Menu */
 const DropDownMenu = styled.div`
@@ -278,7 +340,7 @@ const PageCount = styled.div`
   height: 8px;
   width: 25px;
   border-radius: 100px;
-  background-color: ${(props) => props.theme.color.darkerGrey};
+  background-color: ${(props) => props.theme.color.lighterGrey};
 `;
 const PageCountActive = styled(PageCount)`
   width: 50px;
@@ -350,6 +412,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
+  console.log(donationValue);
   return (
     <>
       <Section>
@@ -460,7 +523,10 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
             </DonationWrapper>
           </Wrapper>
           <ButtonWrapper>
-            {submit === '' || submit === undefined || donationValue < 1 ? (
+            {submit === '' ||
+            submit === undefined ||
+            donationValue < 1 ||
+            donationValue === undefined ? (
               <ContinueBttnNotActive type="submit">
                 {t('chooseHelp.button')}
               </ContinueBttnNotActive>

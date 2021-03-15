@@ -8,7 +8,8 @@ import SkIcon from '../assets/slovakia.png';
 import { Trans } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
-
+/**Styling */
+/**Section */
 const Section = styled.section`
   height: 650px;
   width: 700px;
@@ -17,24 +18,125 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 700px) {
+    width: 500px;
+  }
+  @media (max-width: 500px) {
+    width: 400px;
+  }
 `;
+/**Fonts */
 const H1 = styled.h1`
   width: 570px;
   font-size: 49px;
   font-weight: 700;
   line-height: 52px;
   text-align: start;
+  @media (max-width: 700px) {
+    font-size: 35px;
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    font-size: 35px;
+    width: 350px;
+  }
 `;
-const Input = styled.input`
-  height: 70px;
-  width: 550px;
-  border: 1px solid ${(props) => props.theme.color.lightGrey};
-  border-radius: 7px;
-  padding-left: 15px;
-  padding-top: 15px;
+const BoldText = styled.p`
+  font-weight: bold;
+`;
+/**Wrappers */
+const PhoneNumWrapper = styled.div`
+  height: 65px;
+  width: 100%;
+  display: flex;
+`;
+const FormWrapper = styled.div`
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+const PageCountWrapper = styled.div`
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+`;
+const TranslateHandleWraper = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+`;
+const AsideWrapper = styled.div`
+  width: 570px;
+  height: 1px;
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+  }
+`;
+/**Forms, buttons, labels and inputs */
+const Forms = styled.form`
+  height: 490px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 450px;
+  }
+  @media (max-width: 500px) {
+    width: 350px;
+  }
+`;
+const ContinueBttn = styled.button`
+  height: 53px;
+  width: 126px;
+  background-image: ${(props) => props.theme.color.primary};
+  border: none;
+  border-radius: 100px;
+  color: white;
+  font-weight: 800;
+  font-size: 0.8rem;
   outline: none;
+  cursor: pointer;
+`;
+const ContinueBttnNotActive = styled(ContinueBttn)`
+  background-image: none;
+  background-color: ${(props) => props.theme.color.darkGrey};
+`;
+
+const BackBttn = styled.button`
+  height: 53px;
+  width: 73px;
+  background-color: ${(props) => props.theme.color.terciary};
+  border: none;
+  border-radius: 100px;
+  color: black;
+  font-weight: 800;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+`;
+const TranslateBttn = styled.button`
+  height: 25px;
+  width: 50px;
+  background-image: ${(props) => props.theme.color.primary};
+  border: 1px solid black;
+  border-radius: 100px;
+  outline: none;
+  cursor: pointer;
   :focus {
-    border: 2px solid ${(props) => props.theme.color.borderActive};
+    outline: none;
   }
 `;
 const LabelForMeno = styled.label`
@@ -52,28 +154,17 @@ const LabelForEmail = styled(LabelForMeno)`
 const LabelForPhone = styled(LabelForMeno)`
   margin-top: 320px;
 `;
-const PhoneNumWrapper = styled.div`
-  height: 65px;
-  width: 550px;
-  display: flex;
-`;
-const PhoneNumCountry = styled.div`
-  height: 65px;
-  width: 100px;
-  border: ${(props) =>
-    props.focus
-      ? `1px solid ${props.theme.color.lightGrey}`
-      : `2px solid ${props.theme.color.borderActive}`};
-  border-right: none;
+const Input = styled.input`
+  height: 70px;
+  width: 100%;
+  border: 1px solid ${(props) => props.theme.color.lightGrey};
   border-radius: 7px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding-left: 5px;
+  padding-left: 15px;
   padding-top: 15px;
   outline: none;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  :focus {
+    border: 2px solid ${(props) => props.theme.color.borderActive};
+  }
 `;
 const PhoneNumType = styled.input`
   height: 65px;
@@ -90,97 +181,43 @@ const PhoneNumType = styled.input`
   padding-top: 15px;
   outline: none;
 `;
+const PhoneNumCountry = styled.div`
+  height: 65px;
+  width: 100px;
+  border: ${(props) =>
+    props.focus
+      ? `1px solid ${props.theme.color.lightGrey}`
+      : `2px solid ${props.theme.color.borderActive}`};
+  border-right: none;
+  border-radius: 7px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-left: 5px;
+  padding-top: 15px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+/**Imgs */
 const FlagIcon = styled.img`
   height: 30px;
   width: 30px;
   background: ${SkIcon};
 `;
-
-const FormWrapper = styled.div`
-  height: 380px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-`;
-const ButtonWrapper = styled.div`
-  width: 550px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-const ContinueBttn = styled.button`
-  height: 53px;
-  width: 126px;
-  background-image: ${(props) => props.theme.color.primary};
-  border: none;
-  border-radius: 100px;
-  color: white;
-  font-weight: 800;
-  font-size: 0.8rem;
-  outline: none;
-`;
-const ContinueBttnNotActive = styled(ContinueBttn)`
-  background-image: none;
-  background-color: ${(props) => props.theme.color.darkGrey};
-`;
-const Forms = styled.form`
-  height: 490px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const BackBttn = styled.button`
-  height: 53px;
-  width: 73px;
-  background-color: ${(props) => props.theme.color.terciary};
-  border: none;
-  border-radius: 100px;
-  color: black;
-  font-weight: 800;
-  font-size: 0.8rem;
-  outline: none;
-`;
-const BoldText = styled.p`
-  font-weight: bold;
-`;
-const AsideWrapper = styled.div`
-  width: 570px;
-  height: 1px;
-  display: flex;
-  justify-content: space-between;
-`;
+/**PageCount handeling */
 const PageCount = styled.div`
   height: 8px;
   width: 25px;
   border-radius: 100px;
-  background-color: ${(props) => props.theme.color.darkerGrey};
+  background-color: ${(props) => props.theme.color.lighterGrey};
 `;
 const PageCountActive = styled(PageCount)`
   width: 50px;
   background-image: ${(props) => props.theme.color.primary};
 `;
-const PageCountWrapper = styled.div`
-  width: 110px;
-  display: flex;
-  justify-content: space-between;
-`;
-const TranslateHandleWraper = styled.div`
-  width: 120px;
-  display: flex;
-  justify-content: space-between;
-`;
-const TranslateBttn = styled.button`
-  height: 25px;
-  width: 50px;
-  background-image: ${(props) => props.theme.color.primary};
-  border: 1px solid black;
-  border-radius: 100px;
-  outline: none;
-  :focus {
-    outline: none;
-  }
-`;
+
 const Form = ({ setUserInfo, userInfo }) => {
   /**Initial consts */
   const [name, setName] = useState();
@@ -192,11 +229,12 @@ const Form = ({ setUserInfo, userInfo }) => {
   const [countryFlag, setCountryFlag] = useState(SkIcon);
   const [countryNum, setCountryNum] = useState('+421');
   const [focus, setFocus] = useState(true);
+  /**Redux consts */
   const donationValue = userInfo.userInfo.donationValue;
   const helpValue = userInfo.userInfo.helpValue;
   const shelterValue = userInfo.userInfo.shelterValue;
   const shelterId = userInfo.userInfo.shelterID;
-  console.log(userInfo);
+  /**PhoneNumber handeling (focus and flag changing) */
   const settingFocus = () => {
     setFocus(false);
   };
@@ -226,11 +264,11 @@ const Form = ({ setUserInfo, userInfo }) => {
       phoneNumber: phoneNumber,
     });
   };
+  /**Translation handeling */
   const { t, i118n } = useTranslation();
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
-  console.log(userInfo.userInfo.shelterID);
   return (
     <>
       <Section>
@@ -262,7 +300,7 @@ const Form = ({ setUserInfo, userInfo }) => {
             <LabelForMeno>{t('form.name')}</LabelForMeno>
             <Input
               placeholder={t('form.addName')}
-              pattern="[A-Za-z]{2,20}"
+              pattern="[A-Za-zřťščďžňŘŤŠĎŽČŇéúíóáýÉÚÍÓÁÝůŮ]{2,20}"
               title={t('form.inputTitles.first')}
               onChange={(e) => {
                 setName(e.target.value);
@@ -292,12 +330,15 @@ const Form = ({ setUserInfo, userInfo }) => {
             ></Input>
             <LabelForPhone>{t('form.phone')}</LabelForPhone>
             <PhoneNumWrapper>
-              <PhoneNumCountry onClick={settingFocus} focus={focus} type="text">
-                <FlagIcon
-                  src={countryFlag}
-                  alt=""
-                  onClick={changeCountry}
-                ></FlagIcon>
+              <PhoneNumCountry
+                onClick={() => {
+                  settingFocus();
+                  changeCountry();
+                }}
+                focus={focus}
+                type="text"
+              >
+                <FlagIcon src={countryFlag} alt=""></FlagIcon>
                 <BoldText>{countryNum}</BoldText>
               </PhoneNumCountry>
               <PhoneNumType
