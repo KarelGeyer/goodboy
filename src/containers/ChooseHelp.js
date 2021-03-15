@@ -370,10 +370,15 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
     setDropDownMenu(!dropDownMenu);
   };
   /**FCE to change color and store data to const */
-  const chooseHelp = (e) => {
-    setClicked(!clicked);
+  const chooseAll = (e) => {
     setHelpValue(e.target.innerText);
-    setRequired(clicked === false ? 'Nepovinné' : 'Povinné');
+    setClicked(false);
+    setRequired('Povinné');
+  };
+  const chooseShelter = (e) => {
+    setClicked(true);
+    setHelpValue(e.target.innerText);
+    setRequired('Nepovinné');
   };
   /**Store a chosen shelter */
   const storeValueOnChange = (e) => {
@@ -412,7 +417,6 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
-  console.log(donationValue);
   return (
     <>
       <Section>
@@ -434,13 +438,13 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
         <H1>{t('chooseHelp.title')}</H1>
 
         <ButtonsWrapper>
-          <FirstButton onClick={chooseHelp} clicked={clicked}>
+          <FirstButton onClick={chooseAll} clicked={clicked}>
             <IconWrapper>
               <Icon src={wallet}></Icon>
             </IconWrapper>
             <BttnText>{t('chooseHelp.howToHelp.firstBttn')}</BttnText>
           </FirstButton>
-          <SecondButton onClick={chooseHelp} clicked={clicked}>
+          <SecondButton onClick={chooseShelter} clicked={clicked}>
             <IconWrapper>
               <Icon src={paw}></Icon>
             </IconWrapper>
@@ -507,6 +511,7 @@ const ChooseHelp = ({ setUserInfo, userInfo }) => {
               {donation.map((val) => {
                 return (
                   <Donation
+                    key={val}
                     onClick={() => {
                       setDonationValue(val);
                     }}
