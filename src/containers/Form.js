@@ -5,7 +5,6 @@ import { setUserInfo } from '../redux/actions/userInfo.action';
 import { connect } from 'react-redux';
 import CzIcon from '../assets/czech.png';
 import SkIcon from '../assets/slovakia.png';
-import { Trans } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 /**Styling */
